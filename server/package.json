@@ -1,0 +1,15 @@
+{
+  "dependencies": {
+    "colors": "^1.4.0",
+    "lodash": "^4.17.21",
+    "sqlite": "^4.1.1",
+    "sqlite3": "^5.0.8",
+    "uuid": "^8.3.2"
+  },
+  "devDependencies": {
+    "@types/lodash": "^4.14.182",
+    "@types/node": "^18.0.0",
+    "@types/sqlite3": "^3.1.8",
+    "@types/uuid": "^8.3.4"
+  }
+}

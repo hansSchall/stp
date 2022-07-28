@@ -1,0 +1,321 @@
+body {
+  background-color: black;
+  color: #fe5000;
+  margin: 0;
+  font-family: "Source Sans Pro", "Arial", "Tahoma", sans-serif;
+}
+
+* {
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+@-webkit-keyframes loading {
+  from {
+    height: 2rem;
+  }
+  40% {
+    height: 4rem;
+  }
+  80% {
+    height: 2rem;
+  }
+  to {
+    height: 2rem;
+  }
+}
+
+@keyframes loading {
+  from {
+    height: 2rem;
+  }
+  40% {
+    height: 4rem;
+  }
+  80% {
+    height: 2rem;
+  }
+  to {
+    height: 2rem;
+  }
+}
+
+.fs-loading {
+  width: 100%;
+  height: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  gap: .8rem;
+}
+
+.fs-loading > div:nth-child(-n+3) {
+  -webkit-animation: 1s ease-in-out loading infinite;
+          animation: 1s ease-in-out loading infinite;
+  width: 1rem;
+  background-color: #fe5000;
+  height: 2rem;
+  -webkit-animation-delay: 0s;
+          animation-delay: 0s;
+}
+
+.fs-loading > div:nth-child(2) {
+  -webkit-animation-delay: .1s;
+          animation-delay: .1s;
+}
+
+.fs-loading > div:nth-child(3) {
+  -webkit-animation-delay: .2s;
+          animation-delay: .2s;
+}
+
+.fs-loading > div:nth-child(4) {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%) translateY(4rem);
+          transform: translate(-50%, -50%) translateY(4rem);
+  max-width: 90%;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+}
+
+body > .fs-loading {
+  height: 100vh;
+  width: 100vw;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+body > .fs-loading:not(.active) {
+  display: none;
+}
+
+#win-header {
+  width: 100vw;
+  height: 2rem;
+  background-color: #fe5000;
+  color: black;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: stretch;
+      -ms-flex-align: stretch;
+          align-items: stretch;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  font-weight: 600;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+}
+
+.h-gr {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  height: 100%;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.h-b {
+  height: 100%;
+  width: 3rem;
+  background-color: transparent;
+  border: 0;
+  -webkit-appearance: none;
+     -moz-appearance: none;
+          appearance: none;
+  font-size: 1.1rem;
+}
+
+.h-b:hover, .h-b.active {
+  background-color: #0004;
+}
+
+#app {
+  width: 100vw;
+  height: calc(100vh - 2rem);
+  position: fixed;
+}
+
+#aside {
+  width: 3rem;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  height: 100%;
+  background-color: #111;
+}
+
+#aside > div {
+  -webkit-box-flex: 0;
+      -ms-flex: 0 0 3rem;
+          flex: 0 0 3rem;
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  font-size: 1.4rem;
+}
+
+#aside > div:hover {
+  background-color: #181818;
+}
+
+#aside > div:first-child {
+  background-color: #222;
+}
+
+.frames {
+  width: 100%;
+  height: 100%;
+  padding: .2rem;
+}
+
+.frames .frame {
+  -webkit-box-align: stretch;
+      -ms-flex-align: stretch;
+          align-items: stretch;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  gap: .2rem;
+  -webkit-box-flex: 1;
+      -ms-flex: 1 1 0px;
+          flex: 1 1 0;
+  border-radius: .3rem;
+}
+
+.frames .frame.flex-dir-column {
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+.frames .frame.mark-red {
+  background-color: #dd4125;
+  color: #dd4125;
+}
+
+.frames .frame.mark-red .a-delete {
+  color: #111;
+}
+
+.frames .frame.mark-red .insert-frame:not(.box),
+.frames .frame.mark-red .frame,
+.frames .frame.mark-red .tab-frame {
+  background-color: #dd4125;
+}
+
+.frames .frame.mark-red .tab-edit {
+  display: none;
+}
+
+.frames .insert-frame {
+  -webkit-box-flex: 0;
+      -ms-flex: 0 0 1rem;
+          flex: 0 0 1rem;
+  background-color: #111;
+  border-radius: .2rem;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  gap: .2rem;
+}
+
+.frames .insert-frame.box {
+  background-color: transparent;
+}
+
+.frames .insert-frame .insert-frame {
+  -webkit-box-flex: 1;
+      -ms-flex: 1 1 0px;
+          flex: 1 1 0;
+}
+
+.frames .insert-frame:not(.box):hover {
+  background-color: #222;
+}
+
+.frames > .frame {
+  height: 100%;
+  width: 100%;
+}
+
+.frames .tab-frame {
+  height: 100%;
+  width: 100%;
+  border-radius: .2rem;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  background-color: #080808;
+  position: relative;
+}
+
+.frames .tab-frame .tab-edit {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  gap: .2rem;
+}
+
+.frames .tab-frame .tab-edit > * {
+  background-color: #111;
+  border-radius: .2rem;
+  padding: 1rem;
+  color: #fe5000 !important;
+}
+
+.frames .tab-frame .tab-edit > *:hover {
+  background-color: #222;
+}
+/*# sourceMappingURL=style.css.map */

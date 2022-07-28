@@ -1,0 +1,12 @@
+{
+    "compilerOptions": {
+        "jsx": "react",
+        "target": "es2021",
+        "module": "es6",
+        "moduleResolution": "node",
+        // "outDir": "src/js",
+        // "allowUmdGlobalAccess": true,
+        "esModuleInterop": true,
+        "strict": true
+    }
+}
