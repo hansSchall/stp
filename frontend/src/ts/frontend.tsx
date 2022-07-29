@@ -9,6 +9,7 @@ import { LayoutSaveCancel } from "./components/layoutSaveCancel";
 import { Modals, showExampleModal, ShowModal } from "./modal";
 import { Bi } from "./lib/bi";
 import { Modal, ModalTitle, ModalContent, ModalInput, ModalButtonrow, ModalButton } from "./modalStyle";
+import { Keyboard } from "./keyboard";
 
 require("./includeStyle");
 
@@ -20,16 +21,30 @@ window.addEventListener("load", () => {
     renderRoot(document.querySelector("#app") as HTMLElement, <App />)
 })
 
+enum KeyboardMode {
+    HIDDEN,
+    OVERLAY,
+    WINDOW,
+}
+
 function App() {
     const [editing, setEditMode] = useState(false);
     const [splitting, setSplitting] = useState<Splitting>([]);
     const [saveDialog, showSaveDialog] = useState(false);
+    const [keyboard, setKeyboardMode] = useState(KeyboardMode.HIDDEN);
     function loadSplittingFromStorage() {
         setTimeout(() => {
             setSplitting(JSON.parse(sessionStorage.getItem("editor-splitting") ?? "[]") ?? []);
         }, 100)
     }
     useEffect(loadSplittingFromStorage, []);
+    if (keyboard == KeyboardMode.WINDOW) {
+        return <StrictMode>
+            <WindowTitle title="virtual Keyboard" />
+            <Keyboard></Keyboard>
+            <Modals />
+        </StrictMode>
+    }
     return <React.StrictMode>
         <WindowTitle title="Testtitel" />
         <WindowButtons onEdit={() => {
