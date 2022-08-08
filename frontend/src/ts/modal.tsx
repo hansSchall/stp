@@ -5,7 +5,7 @@ import { Modal, ModalButton, ModalButtonrow, ModalContent, ModalInput, ModalTitl
 
 
 export function Modals() {
-    const [modals, setModals] = useState(new Map<ModalFnType, ModalResolve<any>>());
+    const [modals, setModals] = useState(new Map<ModalFnType<any>, ModalResolve<any>>());
     function updateState() {
         setModals(clone(modals));
     }
@@ -22,11 +22,11 @@ export function Modals() {
     </div>);
 }
 type ModalResolve<T> = (res: T) => void;
-type ModalFnType = (props: {
-    resolve: (res: any) => void,
+type ModalFnType<T> = (props: {
+    resolve: (res: T) => void,
 }) => JSX.Element;
-let addModal: (key: ModalFnType, value: ModalResolve<any>) => void
-export function ShowModal<T>(ModalFn: ModalFnType) {
+let addModal: (key: ModalFnType<any>, value: ModalResolve<any>) => void
+export function ShowModal<T>(ModalFn: ModalFnType<T>) {
     return new Promise<T>(res => {
         addModal(ModalFn, res);
     })

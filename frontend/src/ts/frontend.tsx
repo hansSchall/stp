@@ -23,7 +23,6 @@ window.addEventListener("load", () => {
 function App() {
     const [editing, setEditMode] = useState(false);
     const [splitting, setSplitting] = useState<Splitting>([]);
-    const [saveDialog, showSaveDialog] = useState(false);
     function loadSplittingFromStorage() {
         setTimeout(() => {
             setSplitting(JSON.parse(sessionStorage.getItem("editor-splitting") ?? "[]") ?? []);
@@ -45,37 +44,18 @@ function App() {
                 </Modal>).then(res => {
                     if (res) {
                         sessionStorage.setItem("editor-splitting", JSON.stringify(splitting));
-                        showSaveDialog(false);
                         setEditMode(false);
                     } else {
                         loadSplittingFromStorage();
-                        showSaveDialog(false);
                         setEditMode(false);
                     }
                 })
-                // showSaveDialog(true);
             } else {
                 setEditMode(true);
             }
         }} onMenu={() => { }} onKeyboard={() => { }} edit={editing} />
         <Frames {...{ editing, splitting, setSplitting }} />
-        {saveDialog ? <LayoutSaveCancel onCancel={() => {
-            loadSplittingFromStorage();
-            showSaveDialog(false);
-            setEditMode(false);
-        }} onSave={() => {
-            sessionStorage.setItem("editor-splitting", JSON.stringify(splitting));
-            showSaveDialog(false);
-            setEditMode(false);
-        }} /> : null}
-        <button onClick={showExampleModal}>show modal</button>
+        {/* <button onClick={showExampleModal}>show modal</button> */}
         <Modals />
     </React.StrictMode>
-}
-// setTimeout(showExampleModal, 100);
-// setTimeout(showExampleModal, 200);
-
-function TestApp() {
-    return <StrictMode>
-    </StrictMode>
 }
