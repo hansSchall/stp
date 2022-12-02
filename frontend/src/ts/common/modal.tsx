@@ -1,6 +1,6 @@
 import { clone } from "lodash-es";
 import React, { useState } from "react";
-import { Bi } from "./lib/bi";
+import { Bi } from "../lib/bi";
 import { Modal, ModalButton, ModalButtonrow, ModalContent, ModalInput, ModalTitle } from "./modalStyle";
 
 

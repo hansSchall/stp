@@ -1,0 +1,67 @@
+@keyframes loading {
+    from {
+        height: $loading_h0;
+    }
+
+    40% {
+        height: $loading_h1;
+    }
+
+    80% {
+        height: $loading_h0;
+    }
+
+    to {
+        height: $loading_h0;
+    }
+}
+
+@mixin loadbar {
+    animation: 1s ease-in-out loading infinite;
+    width: 1rem;
+    background-color: $c;
+    height: $loading_h0;
+}
+
+.fs-loading {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: .8rem;
+
+    >div:nth-child(-n+3) {
+        @include loadbar();
+        animation-delay: 0s;
+    }
+
+    >div:nth-child(2) {
+        animation-delay: .1s;
+    }
+
+    >div:nth-child(3) {
+        animation-delay: .2s;
+    }
+
+    >div:nth-child(4) {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%) translateY(4rem);
+        max-width: 90%;
+        user-select: none;
+    }
+}
+
+body>.fs-loading {
+    height: 100vh;
+    width: 100vw;
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    &:not(.active) {
+        display: none;
+    }
+}

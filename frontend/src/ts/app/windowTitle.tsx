@@ -1,7 +1,7 @@
 import React from "react";
 import { useEffect } from "react";
-import { $_, windowLoad } from "./lib/utils";
-import { waitFor } from "./lib/waitFor";
+import { $_, windowLoad } from "../lib/utils";
+import { waitFor } from "../lib/waitFor";
 
 let currentWindowTitle: string;
 let lastSetWindowTitle: string;

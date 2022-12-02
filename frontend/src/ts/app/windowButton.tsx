@@ -1,5 +1,5 @@
 import React, { ButtonHTMLAttributes } from "react"
-import { WindowButtonPortal } from "./lib/portal"
+import { WindowButtonPortal } from "../lib/portal"
 
 export function WindowButtons(props: {
     onMenu: VoidFunction,

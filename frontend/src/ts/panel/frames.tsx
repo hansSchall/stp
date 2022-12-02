@@ -1,7 +1,8 @@
 import { cloneDeep } from "lodash-es";
 import React, { useEffect, useState } from "react";
-import { Bi } from "./lib/bi";
-import { useHover } from "./lib/useHover";
+import { Keyboard } from "../components/keyboard/keyboard";
+import { Bi } from "../lib/bi";
+import { useHover } from "../lib/useHover";
 
 export function Frames(props: {
     editing: boolean,
@@ -197,7 +198,8 @@ function TabFrame(props: {
     index: number[]
 }) {
     return <div className="tab-frame">
-        {props.index.join(".")}
+        {/* props.index.join(".") */}
+        <Keyboard />
         {props.edit.editing ? <div className="tab-edit">
             <div onClick={() => {
                 props.edit.wrapTabFrame(props.index);
