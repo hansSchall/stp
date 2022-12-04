@@ -29,8 +29,8 @@ export abstract class InterfaceStream<R, W, RA, WA> {
         })
     }
 }
-type ArbiUplink = { type: string, origin: string };
-type ArbiDownlink = { type: string, origin: string };
+export type ArbiUplink = { type: string, origin: string };
+export type ArbiDownlink = { type: string, origin: string };
 export class Interface<Uplink, Downlink> {
     constructor() {
         this.client._send = this.server._receieve.bind(this.server);

@@ -1,24 +1,22 @@
-import { flatten } from "lodash";
-import { Driver } from "./driver";
 import { typecheck } from "./typecheck";
 
 const devStorage = new Map<string, Map<string, any>>();
 
 export function getDevStorage(driver: { devID: string }, key: string) {
-    return devStorage.get(driver.devID)?.get(key);
+    return devStorage.get(driver.devID.trim())?.get(key);
 }
 export function getDevStorageType<Type>(driver: { devID: string, driverName: string }, key: string) {
-    return typecheck<Type>(devStorage.get(driver.devID)?.get(key), driver.driverName, key);
+    return typecheck<Type>(devStorage.get(driver.devID.trim())?.get(key), driver.driverName, key);
 }
 
 export function setDevStorage(driver: { devID: string }, key: string, value: any) {
-    return devStorage.get(driver.devID)?.set(key, value);
+    devStorage.get(driver.devID.trim())?.set(key, value);
 }
 
 export function toFile(): string[] {
     return ([...devStorage].map(
         ([devID, data]) =>
-            ["#" + devID, ...([...data].map(
+            ["#" + devID.trim(), ...([...data].map(
                 ([key, value]) =>
                     ["*" + key, "=" + JSON.stringify(value)]
             )).flat()]
@@ -27,9 +25,17 @@ export function toFile(): string[] {
 
 export function fromfile(file: string[]) {
     devStorage.clear();
-    // JSON.parse(file).forEach(([devID, data]: [string, [string,any][]]) => {
-    //     data.forEach(([key, value]) => {
-
-    //     })
-    // })
+    var devID = "";
+    var key = "";
+    file.forEach(line => {
+        line = line.trim();
+        if (line.startsWith("*")) {
+            key = line.substring(1).trim();
+        } else if (line.startsWith("=")) {
+            devStorage.get(devID)?.set(key, JSON.parse(line.substring(1).trim()));
+        } else if (line.startsWith("#")) {
+            devID = line.substring(1).trim();
+            devStorage.set(devID, new Map())
+        }
+    })
 }

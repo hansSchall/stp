@@ -1,6 +1,16 @@
 import { Driver, DriverType } from "../driver";
+import { InterfaceClient } from "../interfaces";
+import { rootUplink } from "./root.driver";
 
-export abstract class SerialPortDriver extends Driver<void, void> {
+export class SerialPortDriver extends Driver<void, void> {
+    constructor(devID: string, uplink: InterfaceClient<void, void>) {
+        super(devID, uplink);
+        // const children = getDevStorageType<TC.Children>(this, "Children")
+        // if (children.valid) {
+        //     
+        // }
+    }
+    public driverName = "serial";
     public getChildren(): Driver<unknown, unknown>[] {
         throw new Error("Method not implemented.");
     }
@@ -10,9 +20,8 @@ export abstract class SerialPortDriver extends Driver<void, void> {
     public getDescription(): string {
         return "Serialport";
     }
-    public unmount(): void {
-        throw new Error("Method not implemented.");
-    }
 }
+
+rootUplink.set("serial", SerialPortDriver);
 
 export const serialUplink: DriverType<string, string> = new Map();

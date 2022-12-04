@@ -3,9 +3,13 @@ import { generateRtoModules } from "typeonly";
 import * as fs from "fs-extra";
 
 export function typecheck<Type>(data: any, defFile: string, defName: string): {
-    data: Type | null,
-    valid: boolean,
-    error: string | null,
+    data: Type,
+    valid: true,
+    error: null,
+} | {
+    data: null,
+    valid: false,
+    error: string,
 } {
     const res = validator?.validate(defName, data, "./" + defFile);
     if (res?.valid) {
