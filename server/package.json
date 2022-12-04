@@ -1,9 +1,14 @@
 {
   "dependencies": {
+    "@typeonly/validator": "^0.5.2",
+    "@types/fs-extra": "^9.0.13",
     "colors": "^1.4.0",
+    "fs-extra": "^11.1.0",
     "lodash": "^4.17.21",
+    "simple-promise-locks": "https://github.com/hansSchall/simple-promise-locks",
     "sqlite": "^4.1.1",
     "sqlite3": "^5.0.8",
+    "typeonly": "^0.4.6",
     "uuid": "^8.3.2"
   },
   "devDependencies": {
