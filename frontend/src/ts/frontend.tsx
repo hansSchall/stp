@@ -1,12 +1,61 @@
-import { renderRoot } from "./app/renderRoot";
+// import { LoadBar } from "./loadBar";
+import { renderRoot } from "./renderRoot";
+import { WindowTitle } from "./windowTitle";
+// import { MS } from "./apps/ms/ms";
+import { Frames, Splitting } from "./frames";
 import React, { StrictMode, useEffect, useState } from "react";
-import { App } from "./app/app";
+import { WindowButtons } from "./windowButton";
+import { LayoutSaveCancel } from "./components/layoutSaveCancel";
+import { Modals, showExampleModal, ShowModal } from "./modal";
+import { Bi } from "./lib/bi";
+import { Modal, ModalTitle, ModalContent, ModalInput, ModalButtonrow, ModalButton } from "./modalStyle";
 
 require("./includeStyle");
+
 
 export let windowButtonDOM: HTMLElement | undefined;
 
 window.addEventListener("load", () => {
     windowButtonDOM = document.getElementById("window-buttons") ?? undefined;
-    renderRoot(document.querySelector("#app") as HTMLElement, <StrictMode><App /></StrictMode>)
+    renderRoot(document.querySelector("#app") as HTMLElement, <App />)
 })
+
+function App() {
+    const [editing, setEditMode] = useState(false);
+    const [splitting, setSplitting] = useState<Splitting>([]);
+    function loadSplittingFromStorage() {
+        setTimeout(() => {
+            setSplitting(JSON.parse(sessionStorage.getItem("editor-splitting") ?? "[]") ?? []);
+        }, 100)
+    }
+    useEffect(loadSplittingFromStorage, []);
+    return <React.StrictMode>
+        <WindowTitle title="Testtitel" />
+        <WindowButtons onEdit={() => {
+            if (editing) {
+                ShowModal((props) => <Modal>
+                    <ModalTitle>Layout-Änderungen speichern?</ModalTitle>
+                    <ModalContent>
+                        <ModalButtonrow>
+                            <ModalButton onClick={() => props.resolve(true)}><Bi i="check-lg" /></ModalButton>
+                            <ModalButton onClick={() => props.resolve(false)}><Bi i="x-lg" /></ModalButton>
+                        </ModalButtonrow>
+                    </ModalContent>
+                </Modal>).then(res => {
+                    if (res) {
+                        sessionStorage.setItem("editor-splitting", JSON.stringify(splitting));
+                        setEditMode(false);
+                    } else {
+                        loadSplittingFromStorage();
+                        setEditMode(false);
+                    }
+                })
+            } else {
+                setEditMode(true);
+            }
+        }} onMenu={() => { }} onKeyboard={() => { }} edit={editing} />
+        <Frames {...{ editing, splitting, setSplitting }} />
+        {/* <button onClick={showExampleModal}>show modal</button> */}
+        <Modals />
+    </React.StrictMode>
+}
