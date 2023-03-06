@@ -2,7 +2,7 @@ import { initTypeonly } from "./typecheck";
 import * as fs from "fs-extra";
 import { Interface } from "./interfaces";
 import { RootDriver } from "./drivers/root.driver";
-import { fromfile, getDevStorage } from "./devStore";
+import { fromfile } from "./devStore";
 
 
 async function main() {

@@ -1,5 +1,4 @@
-import { isArray } from "lodash";
-import { getDevStorage, getDevStorageType } from "../devStore";
+import { getDevStorageType } from "../devStore";
 import { Driver, DriverChildMgr, DriverError, DriverType } from "../driver";
 import { InterfaceClient } from "../interfaces";
 import * as TC from "../../config/typecheck/drivers/root";
