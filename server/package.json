@@ -7,7 +7,7 @@
     "lodash": "^4.17.21",
     "simple-promise-locks": "https://github.com/hansSchall/simple-promise-locks",
     "sqlite": "^4.1.1",
-    "sqlite3": "^5.0.8",
+    "sqlite3": "^5.1.5",
     "typeonly": "^0.4.6",
     "uuid": "^8.3.2"
   },
