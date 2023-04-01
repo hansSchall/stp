@@ -19,7 +19,7 @@ export function typecheck<Type>(data: any, defFile: string, defName: string): {
             error: null,
         }
     } else {
-        console.debug(res?.error);
+        console.trace(res?.error);
         return {
             data: null,
             valid: false,

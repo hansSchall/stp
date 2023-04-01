@@ -1,7 +1,8 @@
 import lock from "simple-promise-locks"
+import { Driver, DriverError } from "./driver";
 
 export abstract class InterfaceStream<R, W, RA, WA> {
-    readonly lockAll = lock(true); // lock all (used by class Interface.constructor)
+    readonly lockAll = lock(true); // lock all (unlocked by class Interface.constructor)
     readonly lockR = lock(true); // locks onReceive (unlock after you set the event handler!)
     send(data: W) {
         this.lockAll().then(() => {
@@ -29,8 +30,19 @@ export abstract class InterfaceStream<R, W, RA, WA> {
         })
     }
 }
-export type ArbiUplink = { type: string, origin: string };
-export type ArbiDownlink = { type: string, origin: string };
+class ArbiLink {
+    constructor(originDev: { devID: string }, readonly type: string) {
+        this.origin = originDev.devID;
+    }
+    readonly origin: string;
+    public err?: DriverError;
+}
+export class ArbiUplink extends ArbiLink {
+
+}
+export class ArbiDownlink extends ArbiLink {
+
+}
 export class Interface<Uplink, Downlink> {
     constructor() {
         this.client._send = this.server._receieve.bind(this.server);

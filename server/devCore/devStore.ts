@@ -1,15 +1,16 @@
+import { Driver } from "./driver";
 import { typecheck } from "./typecheck";
 
 const devStorage = new Map<string, Map<string, any>>();
 
-export function getDevStorage(driver: { devID: string }, key: string) {
+export function getDevStorage(driver: Driver<any, any>, key: string) {
     return devStorage.get(driver.devID.trim())?.get(key);
 }
-export function getDevStorageType<Type>(driver: { devID: string, driverName: string }, key: string) {
+export function getDevStorageType<Type>(driver: Driver<any, any>, key: string) {
     return typecheck<Type>(devStorage.get(driver.devID.trim())?.get(key), driver.driverName, key);
 }
 
-export function setDevStorage(driver: { devID: string }, key: string, value: any) {
+export function setDevStorage(driver: Driver<any, any>, key: string, value: any) {
     devStorage.get(driver.devID.trim())?.set(key, value);
 }
 
