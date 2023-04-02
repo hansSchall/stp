@@ -30,7 +30,7 @@ module.exports = {
         new HtmlWebpackPlugin({
             title: 'STP Client',
             // Load a custom template (lodash by default)
-            template: 'src/frontend.html'
+            template: 'src/frontend.html',
         })
     ],
 
@@ -38,5 +38,10 @@ module.exports = {
         filename: '[contenthash].js',
         path: path.resolve(__dirname, 'dist'),
         clean: true
+    },
+
+    devServer: {
+        compress: true,
+        port: 80,
     },
 };
