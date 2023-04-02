@@ -15,6 +15,7 @@
                 <span id="win-title"></span>
             </div>
             <div class="h-gr">
+                <button class="h-b bi-fullscreen" id="fullscreen-button"></button>
                 <button class="h-b bi-dash-lg"></button>
                 <button class="h-b bi-square"></button>
                 <button class="h-b bi-x-lg"></button>
@@ -28,4 +29,23 @@
             </div>
         </div>
     </body>
+    <script>
+        const btn = document.getElementById("fullscreen-button")
+        document.addEventListener("fullscreenchange", (ev) => {
+            if(document.fullscreenElement){
+                btn.classList.remove("bi-fullscreen");
+                btn.classList.add("bi-fullscreen-exit");
+            }else{
+                btn.classList.add("bi-fullscreen");
+                btn.classList.remove("bi-fullscreen-exit");
+            }
+        })
+        btn.addEventListener("click", () => {
+            if(document.fullscreenElement){
+                document.exitFullscreen();
+            }else{
+                document.documentElement.requestFullscreen();
+            }
+        })
+    </script>
 </html>
