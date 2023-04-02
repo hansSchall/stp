@@ -1,0 +1,213 @@
+$trk: #333;
+$bel: $red;
+$fst: #fa0;
+$to: $mc;
+
+.trv-container {
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+}
+
+.trv-content {
+    height: 100%;
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+}
+
+.trv-nav {
+    padding: 1rem;
+    backdrop-filter: blur(5px);
+    position: absolute;
+    top: 0;
+    right: 0;
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: .3rem;
+}
+
+.trv-nav-button {
+    background-color: $b1;
+    padding: .5rem .7rem;
+    font-size: 1.5rem;
+    border-radius: .2rem;
+    color: #aaa;
+
+    &:hover {
+        color: $mc;
+        background-color: $b2;
+    }
+}
+
+.trv-nav-spacer {
+    width: 2px;
+    height: 3rem;
+    background-color: $b4;
+}
+
+.trv-sidebar {
+    height: calc(100% - .4rem);
+    width: 21rem;
+    background-color: #111;
+    border-radius: .2rem;
+    position: absolute;
+    top: .2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: stretch;
+}
+
+.trv-sidebar-title {
+    width: 100%;
+    flex: 0 0 3rem;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding-left: 1rem;
+}
+
+.trv-sidebar-content {
+    flex: 1 1 auto;
+    width: 100%;
+    padding: .2rem;
+    gap: .2rem;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-content: start;
+}
+
+.trv-parts {
+    left: .2rem;
+}
+
+.trv-props {
+    right: .2rem;
+}
+
+.trv-lib-item {
+    background-color: $b0;
+    border-radius: .2rem;
+    font-size: 3rem;
+    padding: 1rem .5rem;
+
+    border: .2rem solid $b0;
+
+    &:hover {
+        border-color: $mc;
+    }
+}
+
+.trv-chansel {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    backdrop-filter: blur(3px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.trv-chansel-content {
+    width: calc(100% - 3rem);
+    height: calc(100% - 3rem);
+    background-color: $b0;
+    box-shadow: 0 0 1rem $b4;
+    border-radius: .2rem;
+    padding: 1rem;
+}
+
+.trv-view {
+    position: relative;
+    min-width: 100%;
+    min-height: 100%;
+    font-size: 1rem;
+}
+
+.trv-track-base {
+    position: absolute;
+    height: 1.5em;
+    width: 10em;
+    background-color: $trk;
+    transform: translateY(-50%);
+    transform-origin: left center;
+}
+
+.trv-track-corner-base {
+    position: absolute;
+    height: 1.5em;
+    width: 1.5em;
+    background-color: $trk;
+    transform: translate(-50%, -50%);
+    border-radius: 100%;
+    left: 10em;
+}
+
+.trv-track-inner {
+    position: absolute;
+    height: .8em;
+    width: 10em;
+    background-color: $trk;
+    transform: translateY(-50%);
+    transform-origin: left center;
+}
+
+.trv-track-corner-inner {
+    position: absolute;
+    height: .8em;
+    width: .8em;
+    background-color: $trk;
+    transform: translate(-50%, -50%);
+    border-radius: 100%;
+    left: 10em;
+}
+
+
+:is(.trv-track-corner-inner, .trv-track-inner) {
+    &.-bel {
+        background-color: $bel;
+    }
+
+    &.-fst {
+        background-color: $fst;
+    }
+}
+
+.trv-to-track {
+    position: absolute;
+    height: .8em;
+    width: 5em;
+    background-color: $to;
+    transform: translateY(-50%);
+    transform-origin: left center;
+}
+
+@mixin switch($color, $tc: #111) {
+    position: absolute;
+    border-radius: 100%;
+    height: 3em;
+    width: 3em;
+    background-color: $color;
+    border: .2em solid #333;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    transform: translate(-50%, -50%);
+    box-shadow: 0 0 1em #000;
+    color: $tc;
+}
+
+.trv-to-switch {
+    @include switch($to);
+}
