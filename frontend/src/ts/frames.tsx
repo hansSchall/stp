@@ -9,6 +9,7 @@ import { Tabs } from "./tabs";
 export function Frames(props: {
     editing: boolean,
     splitting: Splitting,
+    loadedSplitting: boolean,
     setSplitting: (splitting: Splitting) => void,
 }) {
     const { splitting, setSplitting } = props;
@@ -27,8 +28,8 @@ export function Frames(props: {
         }
         return current;
     }
-    return <main className="frames">
-        <Frame splitting={splitting} flex={1} dir="row" edit={{
+    return <main className={"frames" + (props.editing ? " -edit" : "")}>
+        <Frame splitting={splitting} loadedSplitting={props.loadedSplitting} flex={1} dir="row" edit={{
             editing: props.editing,
             insertBefore(before) {
                 const index = before.pop() as number;
@@ -86,6 +87,7 @@ export function Frames(props: {
                     a.tabs = tabs;
                 }
                 setSplitting(copy);
+                sessionStorage.setItem("editor-splitting", JSON.stringify(copy));
             },
             resizeFrame(frame) {
                 const copy = cloneDeep(splitting);
@@ -129,8 +131,19 @@ function Frame(props: {
     index: number[],
     tabs?: TabArea,
     firstEl?: boolean,
+    loadedSplitting: boolean,
 }) {
     const [markFrameRed, deleteButtonEvs] = useHover();
+    function isEmptyFrame() {
+        return !props.tabs && !props.splitting.length;
+    }
+    useEffect(() => {
+        if (isEmptyFrame() && props.loadedSplitting) {
+            const a = [...props.index];
+            props.edit.convertToTabFrame(a);
+        }
+
+    })
     return <>
         {props.edit.editing && props.firstEl ? <div className="insert-frame" onClick={() => {
             const a = [...props.index];
@@ -174,16 +187,16 @@ function Frame(props: {
                             tabs={area.content instanceof Array ? undefined : area.content}
                             firstEl={!index}
                             key={[...props.index, index].toString()}
+                            loadedSplitting={props.loadedSplitting}
                         />
                     }) :
-                    (((() => {
-                        setTimeout(() => {
-                            const a = [...props.index];
-                            props.edit.convertToTabFrame(a);
-                        }, 0)
-                    })()), <div>
-                            empty frame
-                        </div>
+                    (<div onClick={() => {
+
+
+                    }}>
+                        empty frame
+
+                    </div>
                     )
                 )
             }
@@ -203,7 +216,13 @@ function TabFrame(props: {
     index: number[]
 }) {
     return <div className="tab-frame">
-        <Tabs tabs={props.tabs.tabs} />
+        <Tabs tabs={props.tabs.tabs} addTab={id => {
+            props.edit.updateTabs([...props.tabs.tabs, { id, num: 0 }], props.index)
+        }} closeTab={id => {
+            props.edit.updateTabs(props.tabs.tabs.filter((_, ind) => ind != id), props.index)
+        }} closeAllTabs={() => {
+            props.edit.updateTabs([], props.index);
+        }} />
         {props.edit.editing ? <div className="tab-edit">
             <div onClick={() => {
                 props.edit.wrapTabFrame(props.index);
@@ -215,7 +234,7 @@ function TabFrame(props: {
             }}>
                 <Bi i="arrows-angle-expand" />
             </div>
-        </div> : props.tabs.tabs.map(_ => <div key={_.id}>{_.id}</div>)}
+        </div> : (props.tabs.tabs.map(_ => <div key={_.id}>{_.id}</div>), null)}
     </div>
 }
 type Dir = "row" | "column";

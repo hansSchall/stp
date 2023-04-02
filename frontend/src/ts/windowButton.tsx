@@ -26,7 +26,7 @@ export function WindowButtons(props: {
             active={!!props.keyboard}
         />
         <WindowButton
-            icon={"columns-gap"}
+            icon={"layout-wtf"}
             elattr={{
                 style: { fontSize: "1.2rem" },
                 onClick: props.onEdit

@@ -9,6 +9,8 @@ import { LayoutSaveCancel } from "./components/layoutSaveCancel";
 import { Modals, showExampleModal, ShowModal } from "./modal";
 import { Bi } from "./lib/bi";
 import { Modal, ModalTitle, ModalContent, ModalInput, ModalButtonrow, ModalButton } from "./modalStyle";
+import { ChanView } from "./components/tabs/chanView/chanView";
+import { TrackView } from "./components/tabs/trackView/trackView";
 
 require("./includeStyle");
 
@@ -22,15 +24,20 @@ window.addEventListener("load", () => {
 
 function App() {
     const [editing, setEditMode] = useState(false);
-    const [splitting, setSplitting] = useState<Splitting>([]);
+    const [loadedSplitting, setLoadedsplitting] = useState(false);
+    const [splitting, setSplitting_] = useState<Splitting>([]);
+    function setSplitting(val: Splitting) {
+        console.trace(val);
+        setSplitting_(val);
+    }
     function loadSplittingFromStorage() {
-        setTimeout(() => {
-            setSplitting(JSON.parse(sessionStorage.getItem("editor-splitting") ?? "[]") ?? []);
-        }, 100)
+        console.log(sessionStorage.getItem("editor-splitting"));
+        setSplitting(JSON.parse(sessionStorage.getItem("editor-splitting") ?? "[]") ?? []);
+        setLoadedsplitting(true);
     }
     useEffect(loadSplittingFromStorage, []);
     return <React.StrictMode>
-        <WindowTitle title="Testtitel" />
+        <WindowTitle title="Stellpult" />
         <WindowButtons onEdit={() => {
             if (editing) {
                 ShowModal((props) => <Modal>
@@ -54,8 +61,12 @@ function App() {
                 setEditMode(true);
             }
         }} onMenu={() => { }} onKeyboard={() => { }} edit={editing} />
-        <Frames {...{ editing, splitting, setSplitting }} />
+        <Frames {...{ editing, splitting, setSplitting, loadedSplitting }} />
         {/* <button onClick={showExampleModal}>show modal</button> */}
         <Modals />
     </React.StrictMode>
 }
+
+
+ChanView;
+TrackView;
