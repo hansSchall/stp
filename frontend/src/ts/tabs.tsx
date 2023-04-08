@@ -13,6 +13,8 @@ export function Tabs(props: {
     const [activeTab, setActiveTab] = useState(0);
     const [activeRealTab, setActiveRealTab] = useState(0);
 
+    const [tabcontext] = useState(new WeakMap());
+
     useEffect(() => {
         if (activeTab >= props.tabs.length) {
             setActiveTab(props.tabs.length - 1);
@@ -47,7 +49,7 @@ export function Tabs(props: {
         <div className="tab-content">
             {(() => {
                 if (activeTab == -1) {
-                    return <TabSelection appendTab={appendTab}/>;
+                    return <TabSelection appendTab={appendTab} />;
                 } else if (activeTab == -2) {
                     return <TabOptions closeTab={() => {
                         props.closeTab(activeRealTab);
@@ -55,11 +57,14 @@ export function Tabs(props: {
                     }} closeAllTabs={() => {
                         props.closeAllTabs();
                         setActiveTab(-1);
-                    }}/>;
+                    }} />;
                 } else {
-                    const Comp = tablist.get(props.tabs[activeTab]?.id || "")?.comp;
+                    const tab = tablist.get(props.tabs[activeTab]?.id || "")
+                    const Comp = tab?.comp;
                     if (Comp) {
-                        return <Comp/>
+                        return <Comp data={tabcontext.get(tab) || undefined} setData={data => {
+                            tabcontext.set(tab, data);
+                        }} />
                     } else {
                         return <div>Tab Component not found!</div>
                     }
@@ -74,7 +79,7 @@ function TabSelection(props: {
 }) {
     return <div className="tab-ts-menu">
         <div className="tab-ts-list">
-            {[...tablist].map(([,tab]) => <div className="tab-ts-item" key={tab.id} onClick={() => props.appendTab(tab.id)}>
+            {[...tablist].map(([, tab]) => <div className="tab-ts-item" key={tab.id} onClick={() => props.appendTab(tab.id)}>
                 <div className="-icon"><i className="bi-box" /></div>
                 <div className="-label">{tab.label}</div>
             </div>)}
@@ -89,7 +94,7 @@ function TabOptions(props: {
     return <div className="tab-opt-menu">
         <div className="tab-opt-group">
             <div className="tab-opt-item" onClick={props.closeTab}>
-                <div className="-icon"><Bi i="x-lg"/></div>
+                <div className="-icon"><Bi i="x-lg" /></div>
                 <div className="-label">Close tab</div>
             </div>
             <div className="tab-opt-item" onClick={props.closeAllTabs}>

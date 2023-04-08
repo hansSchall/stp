@@ -3,6 +3,75 @@ $bel: $red;
 $fst: #fa0;
 $to: $mc;
 
+.trv-sheet-sel {
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    padding: 1rem;
+}
+
+.trv-sheet-list {
+    max-width: 100%;
+    width: 30rem;
+}
+
+.trv-sheet-item {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    height: 3rem;
+    border-radius: .2rem;
+    justify-content: space-between;
+    padding: 0 .5rem;
+    background-color: $b1;
+    margin-top: .3rem;
+
+    &:hover {
+        background-color: $b2;
+
+    }
+
+    .-opt {
+        padding: .5rem;
+        border-radius: .2rem;
+
+        &:hover {
+            background-color: $b3;
+        }
+    }
+}
+
+.trv-sheet-add {
+    max-width: 100%;
+    width: 30rem;
+
+
+    input {
+        margin-top: .3rem;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        height: 3rem;
+        width: 100%;
+        border: 0 !important;
+        outline: none !important;
+        border-radius: .2rem;
+        justify-content: space-between;
+        padding: 0 .5rem;
+        background-color: $b1;
+
+        &:hover {
+            background-color: $b2;
+
+        }
+
+        color-scheme: dark;
+    }
+}
+
 .trv-container {
     height: 100%;
     width: 100%;
@@ -55,7 +124,7 @@ $to: $mc;
     background-color: #111;
     border-radius: .2rem;
     position: absolute;
-    top: .2rem;
+    bottom: .2rem;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -90,6 +159,7 @@ $to: $mc;
 }
 
 .trv-props {
+    height: calc(100% - .4rem - 4rem);
     right: .2rem;
 }
 
@@ -128,10 +198,13 @@ $to: $mc;
 }
 
 .trv-view {
-    position: relative;
+    position: absolute;
     min-width: 100%;
+    // min-width: 50rem;
     min-height: 100%;
+    // min-height: 30rem;
     font-size: 1rem;
+    // left: 25em;
 }
 
 .trv-track-base {
@@ -190,6 +263,10 @@ $to: $mc;
     background-color: $to;
     transform: translateY(-50%);
     transform-origin: left center;
+
+    &.-locked {
+        background-color: orangered;
+    }
 }
 
 @mixin switch($color, $tc: #111) {

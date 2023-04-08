@@ -1,6 +1,9 @@
-export const tablist = new Map<string, Tablist>();
-export interface Tablist {
+export const tablist = new Map<string, Tablist<any>>();
+export interface Tablist<T> {
     id: string,
     label: string,
-    comp: () => JSX.Element,
+    comp: (props: {
+        data: T,
+        setData(data: T): void,
+    }) => JSX.Element,
 }

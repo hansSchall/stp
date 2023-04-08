@@ -19,7 +19,7 @@ export let windowButtonDOM: HTMLElement | undefined;
 
 window.addEventListener("load", () => {
     windowButtonDOM = document.getElementById("window-buttons") ?? undefined;
-    renderRoot(document.querySelector("#app") as HTMLElement, <App />)
+    renderRoot(document.querySelector("#app") as HTMLElement, <StrictMode><App /></StrictMode>)
 })
 
 function App() {
@@ -27,16 +27,15 @@ function App() {
     const [loadedSplitting, setLoadedsplitting] = useState(false);
     const [splitting, setSplitting_] = useState<Splitting>([]);
     function setSplitting(val: Splitting) {
-        console.trace(val);
         setSplitting_(val);
     }
     function loadSplittingFromStorage() {
-        console.log(sessionStorage.getItem("editor-splitting"));
+        // console.log(sessionStorage.getItem("editor-splitting"));
         setSplitting(JSON.parse(sessionStorage.getItem("editor-splitting") ?? "[]") ?? []);
         setLoadedsplitting(true);
     }
     useEffect(loadSplittingFromStorage, []);
-    return <React.StrictMode>
+    return <>
         <WindowTitle title="Stellpult" />
         <WindowButtons onEdit={() => {
             if (editing) {
@@ -64,7 +63,7 @@ function App() {
         <Frames {...{ editing, splitting, setSplitting, loadedSplitting }} />
         {/* <button onClick={showExampleModal}>show modal</button> */}
         <Modals />
-    </React.StrictMode>
+    </>
 }
 
 

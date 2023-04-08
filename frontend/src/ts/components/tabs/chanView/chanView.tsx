@@ -1,16 +1,17 @@
 import React from "react";
 import { tablist } from "../../../exportonly";
-import { chanSymbolMap } from "./chanSymblMap";
+import { chanSymbolMap } from "../../chs/chanSymblMap";
+import { Chs } from "../../chs/chs";
 
 export function ChanView() {
     return <>
         <div className="chanv-container">
             <div className="chanv-list">
-                {[...chanSymbolMap].map(([id, sym], ind) => <div className="chanv-item">
+                {[...chanSymbolMap].map(([id], ind) => <div className="chanv-item" key={id}>
                     <div className="chanv-id">{ind + 1}</div>
                     <div className="chanv-symbl">
                         <div className="chs-box">
-                            {sym.map(def => <div className={"chs-" + def} />)}
+                            <Chs id={id} />
                         </div>
                     </div>
                 </div>)}
