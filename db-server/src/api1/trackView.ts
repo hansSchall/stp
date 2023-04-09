@@ -35,6 +35,23 @@ tv.delete("/sheet/:id", async (req, res) => {
     await tv_sheets.remove(item);
     res.status(204).end();
 })
+tv.get("/sheet/:id/size", async (req, res) => {
+    // db
+    //     .createQueryBuilder()
+    //     .select("trackPoint")
+    //     .from(TV_Track_Point, "trackPoint")
+    // .leftJoin("trackPoint.track", "tv_track")
+    // .leftJoin("tv_track.sheet", "tv_sheet")
+    // .where("tv_sheet.id = :id", { id: req.params.id })
+    // .getMany()
+    // .then(res.json)
+    // .catch(err => {
+    //     res.status(500).end();
+    //     console.error(err);
+    // })
+
+    res.status(204).end();
+})
 function jsonTrack(track: TV_Track) {
     return {
         id: track.id,

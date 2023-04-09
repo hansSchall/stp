@@ -3,6 +3,7 @@ import "reflect-metadata";
 import express from "express";
 import cors from "cors";
 import { api as api1 } from "./src/api1/api1";
+import { initTypeonly } from "./src/typeonly";
 
 const app = express();
 
@@ -20,6 +21,7 @@ app.get("/", (req, res) => {
 })
 
 async function main() {
+    await initTypeonly();
     await db.initialize();
     const listener = app.listen(8000, () => {
         const addrInfo = listener?.address();
