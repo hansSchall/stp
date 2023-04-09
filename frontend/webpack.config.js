@@ -47,5 +47,11 @@ module.exports = {
     devServer: {
         compress: true,
         port: 80,
+        proxy: {
+            '/db/api/1': {
+                target: 'http://localhost:8000',
+                pathRewrite: { '^/db': '' },
+            },
+        },
     },
 };
