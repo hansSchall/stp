@@ -15,6 +15,10 @@ app.use(express.json({}))
 
 app.use("/api/1", api1);
 
+app.get("/", (req, res) => {
+    res.end("DB server");
+})
+
 async function main() {
     await db.initialize();
     const listener = app.listen(8000, () => {

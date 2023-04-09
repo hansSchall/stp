@@ -8,6 +8,10 @@ const tv_sheets = db.getRepository(TV_Sheet);
 const tv_tracks = db.getRepository(TV_Track);
 const tv_trackPoints = db.getRepository(TV_Track_Point);
 
+tv.get("/", (req, res) => {
+    res.end("api1/trackView")
+})
+
 tv.get("/sheet/list", async (req, res) => {
     const items = await tv_sheets.find();
     res.json(items.map(item => ({

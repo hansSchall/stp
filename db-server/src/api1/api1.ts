@@ -5,3 +5,6 @@ export const api = Router();
 
 api.use("/trackView", tv);
 
+api.get("/", (req, res) => {
+    res.end("API/1")
+})
