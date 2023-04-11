@@ -28,17 +28,15 @@ export function SheetList(props: {
     const [addMenu, setAddMenu] = useState(false);
     const [addLabel, setaddLabel] = useState("");
     async function loadSheetList() {
-        console.trace("loadSheetList");
         const res = await requestDB("trackView/sheet/list");
         if (res.ok) {
             const list = await res.json() as DB_SheetList;
             setSheetList(list);
         } else {
-            console.error(`coulkd not fetch api/trackView/sheet/list`, res);
+            console.error(`could not fetch api/trackView/sheet/list`, res);
         }
     }
-    console.log("rendering SheetList")
-    useEffect(() => (void loadSheetList(), () => console.trace("uneffect")), []);
+    useEffect(() => void loadSheetList(), []);
     return <div className="trv-sheet-sel">
         {addMenu ?
             <div className="trv-sheet-add">
