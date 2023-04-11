@@ -6,19 +6,13 @@ import { add, mul, sub, vec2 } from "./vec2";
 import img from "C:/Users/hansi/Pictures/DSC02472.JPG";
 
 export function TrackViewRender(props: {
-    offset: vec2,
-    scale: number,
     tracks: RenderOptions.Track[],
     turnouts: RenderOptions.Turnout[],
 }) {
     function off(pos: vec2) {
         return pos;
     }
-    return <div className="trv-view" style={{
-        fontSize: props.scale + "rem",
-        left: props.offset[0] + "px",
-        top: props.offset[1] + "px",
-    }}>
+    return <div className="trv-view">
         <div className="trv-layer -track-base" key="trv-layer-track-base">
             {props.tracks.map(track => <Fragment key={track.id}>
                 {[...G2T.g2t(track.points)].map((part, ind) =>
