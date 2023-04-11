@@ -1,0 +1,438 @@
+$mc: #018A01;
+$red: rgb(221, 65, 37);
+$red: #d82a1d;
+
+$b0: #000;
+$b1: #111;
+$b2: #222;
+$b3: #333;
+$b4: #444;
+
+$loading_h0: 2rem;
+$loading_h1: 4rem;
+
+$header-height: 2.2rem;
+
+@import "chanv.scss";
+@import "usv.scss";
+@import "chs.scss";
+@import "trackv.scss";
+
+body {
+    background-color: black;
+    color: $mc;
+    margin: 0;
+    font-family: "Source Sans Pro", "Arial", "Tahoma", sans-serif;
+}
+
+* {
+    box-sizing: border-box;
+    user-select: none;
+}
+
+@keyframes loading {
+    from {
+        height: $loading_h0;
+    }
+
+    40% {
+        height: $loading_h1;
+    }
+
+    80% {
+        height: $loading_h0;
+    }
+
+    to {
+        height: $loading_h0;
+    }
+}
+
+@mixin loadbar {
+    animation: 1s ease-in-out loading infinite;
+    width: 1rem;
+    background-color: $mc;
+    height: $loading_h0;
+}
+
+#app {
+    background-color: #000;
+    color: #fff;
+    position: fixed;
+    top: $header-height;
+    width: 100vw;
+    height: calc(100vh - $header-height);
+    overflow: auto;
+}
+
+
+//*************************** Header *****************************
+
+#win-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: $header-height;
+    background-color: $mc;
+    color: $b0;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.h-gr {
+    display: flex;
+    align-items: stretch;
+    justify-content: stretch;
+    height: 100%;
+}
+
+.h-b {
+    height: 100%;
+    width: 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    appearance: none;
+    border: 0;
+    background-color: transparent;
+    font-size: 1.1rem;
+
+    &:hover,
+    &.active {
+        background-color: #2225;
+    }
+
+    &.bi-x-lg:hover {
+        background-color: #d82a1d;
+        color: white;
+    }
+}
+
+#win-title {
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 1.2rem;
+}
+
+// ************************** Frames *************************
+
+.frames {
+    width: 100vw;
+    height: calc(100% - $header-height);
+    padding: .2rem;
+    position: fixed;
+    display: flex;
+
+    &.-edit {
+        .tab-frame {
+
+            .tab-nav,
+            .tab-content {
+                pointer-events: none;
+                filter: blur(5px);
+            }
+
+            .tab-edit {
+                pointer-events: unset;
+            }
+        }
+    }
+
+    .frame {
+        align-items: stretch;
+        display: flex;
+        flex-direction: row;
+        position: relative;
+        gap: .2rem;
+        flex: 1 1 0;
+        flex-basis: 0 !important;
+        border-radius: .3rem;
+        overflow: auto;
+
+        &.flex-dir-column {
+            flex-direction: column;
+        }
+
+        &.mark-red {
+            background-color: $red;
+            color: $red;
+
+            >*>.a-delete {
+                color: $b0;
+            }
+
+            .insert-frame:not(.box),
+            .frame,
+            .tab-frame {
+                background-color: $red;
+                // visibility: hidden;
+                opacity: 0;
+            }
+
+            .tab-edit {
+                display: none;
+            }
+        }
+    }
+
+    .insert-frame {
+        flex: 0 0 1rem;
+        background-color: $b2;
+        border-radius: .2rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: .2rem;
+
+        &.box {
+            background-color: transparent;
+        }
+
+        .insert-frame {
+            flex: 1 1 0
+        }
+
+        &:not(.box):hover {
+            background-color: $b3;
+        }
+
+    }
+
+
+    .tab-frame {
+        height: 100%;
+        width: 100%;
+        border-radius: .2rem;
+        flex-direction: column;
+        background-color: $b0;
+        position: relative;
+
+        .tab-edit {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            display: flex;
+            flex-direction: row;
+            gap: .2rem;
+
+            >* {
+                background-color: #111;
+                border-radius: .2rem;
+                padding: 1rem;
+                color: $mc !important;
+
+                &:hover {
+                    background-color: #222;
+                }
+            }
+        }
+    }
+}
+
+
+// Tab frames
+
+.tab-nav {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    height: 2.5rem;
+    background-color: #000;
+    padding: .2rem 0;
+    gap: .2rem;
+
+}
+
+
+.tab-tab-select {
+    flex: 1 1 0;
+    display: flex;
+    flex-direction: row;
+    height: 100%;
+    background-color: #000;
+    gap: .2rem;
+    position: relative;
+    overflow-x: scroll;
+    overflow-y: hidden;
+    scrollbar-width: none;
+}
+
+.tab-nav-item,
+.tab-menu {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: $b0;
+    border-radius: .3rem;
+    height: 100%;
+    padding: 0 .4rem;
+    user-select: none;
+    white-space: nowrap;
+
+    &:hover {
+        background-color: $b2;
+    }
+
+    &.active {
+        color: $mc;
+        font-weight: bold;
+    }
+}
+
+.tab-content {
+    position: absolute;
+    top: calc(2.5rem);
+    // bottom: 0;
+    height: calc(100% - 2.5rem);
+    // background-color: red;
+    width: 100%;
+}
+
+.tab-menu {
+    flex: 0 0 2.1rem;
+    width: 2.1rem;
+    height: 2.1rem;
+    color: $mc;
+    background-color: $b1;
+    font-size: 1.3rem;
+}
+
+.tab-ts-menu,
+.tab-opt-menu {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height: 100%;
+    padding: .5rem;
+    gap: .5rem;
+}
+
+.tab-opt-menu {
+    flex-wrap: wrap;
+}
+
+.tab-ts-list {
+    flex: 1 1 0;
+    height: 100%;
+}
+
+.tab-opt-group {
+    flex: 1 1 0;
+    height: 100%;
+    min-width: 8rem;
+}
+
+.tab-ts-item,
+.tab-opt-item {
+    display: flex;
+    align-items: center;
+    justify-content: left;
+    padding: .5rem;
+    border-radius: .2rem;
+    gap: .5rem;
+    margin-bottom: .2rem;
+
+    &:hover {
+        background-color: $b2;
+
+    }
+}
+
+// *********************************** Modal ******************************
+
+.modal-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #1118;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+
+    &:not(.active) {
+        display: none;
+    }
+}
+
+.modal {
+    border-radius: .3rem;
+    background-color: #111;
+    min-height: 3rem;
+    min-width: 13rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.modal-title {
+    width: 100%;
+    height: 2rem;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    font-weight: bold;
+    background-color: $mc;
+    color: #111;
+    padding: 0 1rem;
+    border-top-left-radius: .3rem;
+    border-top-right-radius: .3rem;
+}
+
+.modal-content {
+    color: $mc;
+}
+
+.modal-button-row {
+    display: flex;
+    flex-direction: row;
+    gap: .3rem;
+    padding: .3rem;
+}
+
+.modal-button {
+    flex: 1 0 auto;
+    padding: .7rem;
+    background-color: #181818;
+    appearance: none;
+    border: 0;
+    color: currentColor;
+    font-size: 1em;
+    border-radius: .3rem;
+
+    &:hover {
+        background-color: #222;
+    }
+}
+
+.modal-input {
+    flex: 1 0 auto;
+    padding: .5rem;
+    background-color: #181818;
+    appearance: none;
+    border: 0;
+    color: currentColor;
+    font-size: 1em;
+    border-radius: .3rem;
+    margin: .3rem;
+    width: calc(100% - .6rem);
+    outline: none !important;
+
+    &:hover {
+        background-color: #222;
+    }
+}

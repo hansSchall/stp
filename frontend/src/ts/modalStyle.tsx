@@ -1,4 +1,4 @@
-import React, { ButtonHTMLAttributes, DetailedHTMLProps } from "react";
+import React, { ButtonHTMLAttributes, DetailedHTMLProps, InputHTMLAttributes } from "react";
 import { PropsWithChildren } from "react";
 
 export function Modal(props: PropsWithChildren & {
@@ -32,7 +32,7 @@ export function ModalButton(props: DetailedHTMLProps<ButtonHTMLAttributes<HTMLBu
         {props.children}
     </button>
 }
-export function ModalInput(props: DetailedHTMLProps<ButtonHTMLAttributes<HTMLInputElement>, HTMLInputElement>) {
+export function ModalInput(props: DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>) {
     return <input className="modal-input" {...props}>
         {props.children}
     </input>

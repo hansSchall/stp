@@ -1,16 +1,16 @@
 <!DOCTYPE html>
-<html lang="de">
+<html>
     <head>
-        <title>Stellpult</title>
         <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width">
+        <meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1, maximum-scale=1">
         <style>
-            body{
+            body, html, :root{
                 background-color: black;
+                touch-action: none;
             }
         </style>
     </head>
-    <body>
+    <body oncontextmenu="return false;">
         <header id="win-header">
             <div class="h-gr" id="window-buttons">
             </div>
@@ -18,6 +18,7 @@
                 <span id="win-title"></span>
             </div>
             <div class="h-gr">
+                <button class="h-b bi-fullscreen" id="fullscreen-button"></button>
                 <button class="h-b bi-dash-lg"></button>
                 <button class="h-b bi-square"></button>
                 <button class="h-b bi-x-lg"></button>
@@ -31,4 +32,23 @@
             </div>
         </div>
     </body>
+    <script>
+        const btn = document.getElementById("fullscreen-button")
+        document.addEventListener("fullscreenchange", (ev) => {
+            if(document.fullscreenElement){
+                btn.classList.remove("bi-fullscreen");
+                btn.classList.add("bi-fullscreen-exit");
+            }else{
+                btn.classList.add("bi-fullscreen");
+                btn.classList.remove("bi-fullscreen-exit");
+            }
+        })
+        btn.addEventListener("click", () => {
+            if(document.fullscreenElement){
+                document.exitFullscreen();
+            }else{
+                document.documentElement.requestFullscreen();
+            }
+        })
+    </script>
 </html>

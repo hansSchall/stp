@@ -1,0 +1,47 @@
+.chanv-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+.chanv-list {
+    width: 100%;
+    height: 100%;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    flex-wrap: wrap;
+    display: flex;
+    gap: .2rem;
+    align-content: start;
+}
+
+.chanv-item {
+    display: flex;
+    background-color: $b1;
+    width: 4rem;
+    height: 6rem;
+    border-radius: .2rem;
+    border: .2rem solid $mc;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: stretch;
+}
+
+.chanv-id {
+    flex: 0 0 1.2rem;
+    border-bottom: .2rem solid $mc;
+    text-align: center;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: $mc;
+}
+
+.chanv-symbl {
+    font-size: 3.4rem;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

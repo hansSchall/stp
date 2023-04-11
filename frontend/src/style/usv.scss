@@ -1,0 +1,24 @@
+.usv-container,
+.usv-hammer {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    overflow: hidden;
+    touch-action: none;
+}
+
+.usv-box {
+    position: absolute;
+    background-color: $mc;
+    touch-action: none;
+    transform-origin: top left;
+}
+
+.usv-info {
+    position: absolute;
+    background-color: black;
+    padding: .2rem;
+    color: yellow;
+    z-index: 5;
+    margin: 1rem;
+}

@@ -1,5 +1,5 @@
 import React, { ButtonHTMLAttributes } from "react"
-import { WindowButtonPortal } from "../lib/portal"
+import { WindowButtonPortal } from "./lib/portal"
 
 export function WindowButtons(props: {
     onMenu: VoidFunction,
@@ -26,7 +26,7 @@ export function WindowButtons(props: {
             active={!!props.keyboard}
         />
         <WindowButton
-            icon={"columns-gap"}
+            icon={"layout-wtf"}
             elattr={{
                 style: { fontSize: "1.2rem" },
                 onClick: props.onEdit

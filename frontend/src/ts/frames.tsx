@@ -1,12 +1,15 @@
 import { cloneDeep } from "lodash-es";
 import React, { useEffect, useState } from "react";
-import { Keyboard } from "../components/keyboard/keyboard";
-import { Bi } from "../lib/bi";
-import { useHover } from "../lib/useHover";
+import { Bi } from "./lib/bi";
+import { useHover } from "./lib/useHover";
+import { ShowModal } from "./modal";
+import { Modal, ModalTitle, ModalContent, ModalInput, ModalButtonrow, ModalButton } from "./modalStyle";
+import { Tabs } from "./tabs";
 
 export function Frames(props: {
     editing: boolean,
     splitting: Splitting,
+    loadedSplitting: boolean,
     setSplitting: (splitting: Splitting) => void,
 }) {
     const { splitting, setSplitting } = props;
@@ -25,14 +28,11 @@ export function Frames(props: {
         }
         return current;
     }
-    return <main className="frames">
-        <Frame splitting={splitting} flex={1} dir="row" edit={{
+    return <main className={"frames" + (props.editing ? " -edit" : "")}>
+        <Frame splitting={splitting} loadedSplitting={props.loadedSplitting} flex={1} dir="row" edit={{
             editing: props.editing,
             insertBefore(before) {
-                // console.log("inserting", before);
                 const index = before.pop() as number;
-                // console.log(index);
-                // before.shift();
                 const copy = cloneDeep(splitting);
 
                 getRecurse(copy, before)
@@ -41,17 +41,6 @@ export function Frames(props: {
                         flex: 1,
                     } as Area)
 
-
-                // let current = spcp;
-                // while (before.length) {
-                //     const n = current[before.shift() ?? 0].content;
-                //     if (n instanceof Array) {
-                //         current = n;
-                //         console.log(current);
-                //     } else
-                //         break;
-                // }
-                // console.log(current, before);
                 setSplitting(copy);
             },
             deleteFrame(frame: number[]) {
@@ -59,7 +48,6 @@ export function Frames(props: {
                 const index = frame.pop() as number;
                 const a = getRecurse(copy, frame);
                 a.splice(index, 1);
-                // console.log("delete", index)
                 setSplitting(copy);
             },
             convertToTabFrame(frame: number[]) {
@@ -78,20 +66,15 @@ export function Frames(props: {
                 setSplitting(copy);
             },
             wrapTabFrame(frame: number[]) {
-                // console.log(frame);
                 const copy = cloneDeep(splitting);
                 const index = frame.pop() as number;
-                // console.log(copy, frame);
                 const a = (getRecurse(copy, frame));
-                // console.log(a);
                 const flex = a[index].flex;
                 a[index].flex = 1;
                 a[index] = {
                     flex: flex,
                     content: [a[index]]
                 }
-                // a.content = [a];
-                // console.log(copy);
                 setSplitting(copy);
             },
             updateTabs(tabs, frame) {
@@ -104,7 +87,30 @@ export function Frames(props: {
                     a.tabs = tabs;
                 }
                 setSplitting(copy);
+                sessionStorage.setItem("editor-splitting", JSON.stringify(copy));
             },
+            resizeFrame(frame) {
+                const copy = cloneDeep(splitting);
+                const index = frame.pop() as number;
+                const a = (getRecurse(copy, frame));
+                const oldFlex = a[index].flex;
+                ShowModal<number>((props) => {
+                    const [flexValue, setFlexValue] = useState(oldFlex);
+                    return <Modal onEnter={() => props.resolve(flexValue)}>
+                        <ModalTitle>enter frame size</ModalTitle>
+                        <ModalContent>
+                            <ModalInput placeholder="Flex-value" type="number" value={flexValue} onChange={(ev) => setFlexValue(parseFloat(ev.target.value))} autoFocus={true} />
+                            <ModalButtonrow>
+                                <ModalButton onClick={() => props.resolve(flexValue)}><Bi i="check-lg" /></ModalButton>
+                                <ModalButton onClick={() => props.resolve(oldFlex)}><Bi i="x-lg" /></ModalButton>
+                            </ModalButtonrow>
+                        </ModalContent>
+                    </Modal>
+                }).then((value) => {
+                    a[index].flex = value;
+                    setSplitting(copy);
+                })
+            }
         }} index={[]}></Frame>
     </main>
 }
@@ -114,7 +120,8 @@ type Edit = {
     deleteFrame(index: number[]): void,
     convertToTabFrame(frame: number[]): void,
     wrapTabFrame(frame: number[]): void,
-    updateTabs(tabs: string[], index: number[]): void
+    updateTabs(tabs: TablistItem[], index: number[]): void,
+    resizeFrame(frame: number[]): void,
 }
 function Frame(props: {
     splitting: Splitting,
@@ -124,8 +131,19 @@ function Frame(props: {
     index: number[],
     tabs?: TabArea,
     firstEl?: boolean,
+    loadedSplitting: boolean,
 }) {
     const [markFrameRed, deleteButtonEvs] = useHover();
+    function isEmptyFrame() {
+        return !props.tabs && !props.splitting.length;
+    }
+    useEffect(() => {
+        if (isEmptyFrame() && props.loadedSplitting) {
+            const a = [...props.index];
+            props.edit.convertToTabFrame(a);
+        }
+
+    })
     return <>
         {props.edit.editing && props.firstEl ? <div className="insert-frame" onClick={() => {
             const a = [...props.index];
@@ -147,7 +165,7 @@ function Frame(props: {
                     <Bi i="trash" />
                 </div>
                 <div className="insert-frame" onClick={() => {
-                    // props.edit.deleteFrame(props.index);
+                    props.edit.resizeFrame(props.index);
                 }} >
                     <Bi i="arrows-angle-expand" />
                 </div>
@@ -169,16 +187,16 @@ function Frame(props: {
                             tabs={area.content instanceof Array ? undefined : area.content}
                             firstEl={!index}
                             key={[...props.index, index].toString()}
+                            loadedSplitting={props.loadedSplitting}
                         />
                     }) :
-                    (((() => {
-                        setTimeout(() => {
-                            const a = [...props.index];
-                            props.edit.convertToTabFrame(a);
-                        }, 0)
-                    })()), <div>
-                            empty frame
-                        </div>
+                    (<div onClick={() => {
+
+
+                    }}>
+                        empty frame
+
+                    </div>
                     )
                 )
             }
@@ -198,8 +216,13 @@ function TabFrame(props: {
     index: number[]
 }) {
     return <div className="tab-frame">
-        {/* props.index.join(".") */}
-        <Keyboard />
+        <Tabs tabs={props.tabs.tabs} addTab={id => {
+            props.edit.updateTabs([...props.tabs.tabs, { id, num: 0 }], props.index)
+        }} closeTab={id => {
+            props.edit.updateTabs(props.tabs.tabs.filter((_, ind) => ind != id), props.index)
+        }} closeAllTabs={() => {
+            props.edit.updateTabs([], props.index);
+        }} />
         {props.edit.editing ? <div className="tab-edit">
             <div onClick={() => {
                 props.edit.wrapTabFrame(props.index);
@@ -207,11 +230,11 @@ function TabFrame(props: {
                 <Bi i="signpost-split" />
             </div>
             <div onClick={() => {
-                // props.edit.wrapTabFrame(props.index);
+                props.edit.resizeFrame(props.index);
             }}>
                 <Bi i="arrows-angle-expand" />
             </div>
-        </div> : props.tabs.tabs.map(_ => <div key={_}>{_}</div>)}
+        </div> : (props.tabs.tabs.map(_ => <div key={_.id}>{_.id}</div>), null)}
     </div>
 }
 type Dir = "row" | "column";
@@ -221,6 +244,11 @@ interface Area {
     flex: number,
     content: Splitting | TabArea
 }
+export interface TablistItem {
+    id: string;
+    num: number;
+}
+
 interface TabArea {
-    tabs: string[]
+    tabs: TablistItem[]
 }

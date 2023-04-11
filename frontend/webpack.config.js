@@ -15,6 +15,10 @@ module.exports = {
                 test: /\.(sa|sc|c)ss$/i,
                 use: ["style-loader", "css-loader", "postcss-loader", "sass-loader"],
             },
+            {
+                test: /\.(png|svg|jpg|jpeg|gif)$/i,
+                type: 'asset/resource',
+            },
         ],
     },
     devtool: 'source-map',
@@ -30,7 +34,7 @@ module.exports = {
         new HtmlWebpackPlugin({
             title: 'STP Client',
             // Load a custom template (lodash by default)
-            template: 'src/frontend.html'
+            template: 'src/frontend.html',
         })
     ],
 
@@ -38,5 +42,16 @@ module.exports = {
         filename: '[contenthash].js',
         path: path.resolve(__dirname, 'dist'),
         clean: true
+    },
+
+    devServer: {
+        compress: true,
+        port: 80,
+        proxy: {
+            '/db/api/1': {
+                target: 'http://localhost:8000',
+                pathRewrite: { '^/db': '' },
+            },
+        },
     },
 };
