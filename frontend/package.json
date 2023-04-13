@@ -28,8 +28,8 @@
     "webpack-dev-server": "^4.13.2"
   },
   "scripts": {
+    "setup": "yarn install",
     "build": "webpack",
-    "build-w": "webpack -w",
-    "build serve": "webpack serve"
+    "run": "webpack serve"
   }
 }
