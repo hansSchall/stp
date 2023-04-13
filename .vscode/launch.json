@@ -5,9 +5,20 @@
   "version": "0.2.0",
   "configurations": [
     {
+      "name": "Webpack Dev Server",
       "type": "node",
       "request": "launch",
-      "name": "Launch Program",
+      "program": "${workspaceFolder}/frontend/node_modules/webpack-dev-server/bin/webpack-dev-server",
+      "args": [
+        "--hot",
+        "--progress"
+      ],
+      "cwd": "${workspaceFolder}/frontend",
+    },
+    {
+      "name": "DB-Server (Postgres)",
+      "type": "node",
+      "request": "launch",
       "skipFiles": [
         "<node_internals>/**"
       ],
