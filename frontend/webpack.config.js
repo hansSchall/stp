@@ -32,8 +32,7 @@ module.exports = {
     },
     plugins: [
         new HtmlWebpackPlugin({
-            title: 'STP Client',
-            // Load a custom template (lodash by default)
+            title: 'Stellpult',
             template: 'src/frontend.html',
         })
     ],
