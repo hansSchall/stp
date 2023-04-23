@@ -1,0 +1,23 @@
+{
+	"folders": [
+		{
+			"name": "frontend",
+			"path": "frontend"
+		},
+		{
+			"name": "server",
+			"path": "server"
+		},
+		{
+			"name": "ApiTypes",
+			"path": "ApiTypes"
+		}
+	],
+	"settings": {
+		"deno.inlayHints.functionLikeReturnTypes.enabled": true,
+		"cSpell.words": [
+			"sendv",
+			"Stellpult"
+		]
+	}
+}

@@ -1,3 +1,5 @@
+// @ts-check
+
 const path = require('path');
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 
@@ -34,23 +36,17 @@ module.exports = {
         new HtmlWebpackPlugin({
             title: 'Stellpult',
             template: 'src/frontend.html',
-        })
+        }),
     ],
 
     output: {
         filename: '[contenthash].js',
         path: path.resolve(__dirname, 'dist'),
-        clean: true
+        clean: true,
     },
 
     devServer: {
         compress: true,
         port: 80,
-        proxy: {
-            '/db/api/1': {
-                target: 'http://localhost:8000',
-                pathRewrite: { '^/db': '' },
-            },
-        },
     },
 };

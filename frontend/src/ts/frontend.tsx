@@ -11,6 +11,7 @@ import { Bi } from "./lib/bi";
 import { Modal, ModalTitle, ModalContent, ModalInput, ModalButtonrow, ModalButton } from "./modalStyle";
 import { ChanView } from "./components/tabs/chanView/chanView";
 import { TrackView } from "./components/tabs/trackView/trackView";
+import "./api/api";
 
 require("./includeStyle");
 
