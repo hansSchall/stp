@@ -2,7 +2,7 @@ import React, { ButtonHTMLAttributes, DetailedHTMLProps, InputHTMLAttributes } f
 import { PropsWithChildren } from "react";
 
 export function Modal(props: PropsWithChildren & {
-    onEnter?: VoidFunction
+    onEnter?: VoidFunction;
 }) {
     return <div className="modal" onKeyUp={ev => {
         if (ev.key == "Enter") {
@@ -10,30 +10,30 @@ export function Modal(props: PropsWithChildren & {
         }
     }}>
         {props.children}
-    </div>
+    </div>;
 }
 export function ModalTitle(props: PropsWithChildren) {
     return <div className="modal-title">
         {props.children}
-    </div>
+    </div>;
 }
 export function ModalContent(props: PropsWithChildren) {
     return <div className="modal-content">
         {props.children}
-    </div>
+    </div>;
 }
-export function ModalButtonrow(props: PropsWithChildren) {
+export function ModalButtonRow(props: PropsWithChildren) {
     return <div className="modal-button-row">
         {props.children}
-    </div>
+    </div>;
 }
 export function ModalButton(props: DetailedHTMLProps<ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement>) {
     return <button className="modal-button" {...props}>
         {props.children}
-    </button>
+    </button>;
 }
 export function ModalInput(props: DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>) {
     return <input className="modal-input" {...props}>
         {props.children}
-    </input>
+    </input>;
 }

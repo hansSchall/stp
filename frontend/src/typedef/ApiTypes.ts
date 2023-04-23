@@ -1,32 +1,32 @@
 import { Type } from "@sinclair/typebox";
 
-const MethodIncomming = Type.Object({
+const MethodIncoming = Type.Object({
     resendTVSheetList: Type.Boolean(),
     deleteTVSheet: Type.Integer(),
     addTVSheet: Type.String(),
-})
+});
 
 const MethodOutgoing = Type.Object({
     tvSheetList: Type.Array(Type.Object({
         id: Type.Integer(),
         label: Type.String(),
     }))
-})
+});
 
-const MethodBidir = Type.Object({
+const MethodBiDir = Type.Object({
 
-})
+});
 
 export const ApiIDType = Type.String();
 
-export const ApiIncomming = Type.Object({
-    tx: Type.Partial(Type.Composite([MethodIncomming, MethodBidir])),
+export const ApiIncoming = Type.Object({
+    tx: Type.Partial(Type.Composite([MethodIncoming, MethodBiDir])),
     reqID: Type.Optional(ApiIDType),
     resID: Type.Optional(ApiIDType),
 });
 
 export const ApiOutgoing = Type.Object({
-    tx: Type.Partial(Type.Composite([MethodOutgoing, MethodBidir])),
+    tx: Type.Partial(Type.Composite([MethodOutgoing, MethodBiDir])),
     reqID: Type.Optional(ApiIDType),
     resID: Type.Optional(ApiIDType),
 });

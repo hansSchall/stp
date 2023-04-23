@@ -1,11 +1,11 @@
 import { io } from "socket.io-client";
 import { Static } from "@sinclair/typebox";
 import { TypeCompiler } from "@sinclair/typebox/compiler";
-import { ApiIDType, ApiIncomming, ApiOutgoing } from "../../typedef/ApiTypes";
+import { ApiIDType, ApiIncoming, ApiOutgoing } from "../../typedef/ApiTypes";
 import { uniqueId } from "lodash-es";
 
 
-export type Outgoing = Static<typeof ApiIncomming>;
+export type Outgoing = Static<typeof ApiIncoming>;
 export type Incoming = Static<typeof ApiOutgoing>;
 export type ApiID = Static<typeof ApiIDType>;
 
@@ -35,7 +35,7 @@ export class TypedSocket {
 
     public recv(data: string) {
         if (this.destroyed) {
-            console.warn(`[warn] [ignored] destroyed TypedSocket receieved data`);
+            console.warn(`[warn] [ignored] destroyed TypedSocket received data`);
             return;
         }
         try {
