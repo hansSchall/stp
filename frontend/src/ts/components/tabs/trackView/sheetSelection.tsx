@@ -15,9 +15,9 @@ export function TVSheetSelection(props: {
     }
     console.log("current sheet is", sheet);
     if (sheet != -1) {
-        return <TrackView id={sheet} sheetSelection={() => setSheet(-1)} />
+        return <TrackView id={sheet} sheetSelection={() => setSheet(-1)} />;
     } else {
-        return <SheetList sheetSelected={setSheet} />
+        return <SheetList sheetSelected={setSheet} />;
     }
 }
 
@@ -25,14 +25,14 @@ export function SheetList(props: {
     sheetSelected: (sheet: number) => void,
 }) {
     const [addMenu, setAddMenu] = useState(false);
-    const [addLabel, setaddLabel] = useState("");
+    const [addLabel, setAddLabel] = useState("");
     const resend = () => callApi("resendTVSheetList", true);
     const sheetList = useServerSource("tvSheetList", [], resend);
 
     return <div className="trv-sheet-sel">
         {addMenu ?
             <div className="trv-sheet-add">
-                <input placeholder="Add Sheet" autoFocus value={addLabel} onChange={ev => setaddLabel(ev.target.value)} onKeyDown={async ev => {
+                <input placeholder="Add Sheet" autoFocus value={addLabel} onChange={ev => setAddLabel(ev.target.value)} onKeyDown={async ev => {
                     if (ev.key == "Enter") {
                         callApi("addTVSheet", addLabel);
                         // const res = await requestDB("trackView/sheet", "PUT", {
@@ -42,7 +42,7 @@ export function SheetList(props: {
                         //     const { id } = await res.json() as DB_AddSheetResult;
                         //     props.sheetSelected(id);
                         // } else {
-                        //     console.error(`coulkd not fetch PUT:api/trachView/sheet`, res);
+                        //     console.error(`could not fetch PUT:api/trackView/sheet`, res);
                         // }
                     }
                 }} />
@@ -62,7 +62,7 @@ export function SheetList(props: {
                     // if (res.ok) {
                     //     await loadSheetList();
                     // } else {
-                    //     console.error(`coulkd not fetch DELETE:api/trachView/sheet`, res);
+                    //     console.error(`could not fetch DELETE:api/trackView/sheet`, res);
                     // }
                 }}>
                     <Bi i="trash" />
@@ -70,13 +70,13 @@ export function SheetList(props: {
             </div>)}
 
         </div>
-    </div>
+    </div>;
 }
 
 type DB_SheetList = {
     id: number,
     label: string,
-}[]
+}[];
 
 interface DB_AddSheetResult {
     id: number,

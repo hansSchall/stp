@@ -1,28 +1,28 @@
 import { Server } from "https://deno.land/x/socket_io@0.2.0/mod.ts";
 import { TypedSocket } from "./typedSocket.ts";
 
-const pingcontent = Symbol("pingContent");
+const pingContent = Symbol("pingContent");
 
 interface ClientPingContent {
-    content: typeof pingcontent,
+    content: typeof pingContent,
 }
 
 interface ServerPingContent {
     timestamp: number,
 }
 
-interface SocketIncomming {
-    ping(ctnt: ClientPingContent): void,
-    pong(ctnt: ServerPingContent): void,
+interface SocketIncoming {
+    ping(content: ClientPingContent): void,
+    pong(content: ServerPingContent): void,
     msg(msg: string): void,
 }
 interface SocketOutgoing {
-    ping(ctnt: ServerPingContent): void,
-    pong(ctnt: ClientPingContent): void,
+    ping(content: ServerPingContent): void,
+    pong(content: ClientPingContent): void,
     msg(msg: string): void,
 }
 
-export const io = new Server<SocketOutgoing, SocketIncomming>({
+export const io = new Server<SocketOutgoing, SocketIncoming>({
     cors: {
         origin: "*",
     }
@@ -31,13 +31,13 @@ export const io = new Server<SocketOutgoing, SocketIncomming>({
 io.on("connection", (socket) => {
     console.log(`socket ${socket.id} connected`);
 
-    socket.on("ping", (ctnt) => {
-        socket.emit("pong", ctnt);
-    })
+    socket.on("ping", (content) => {
+        socket.emit("pong", content);
+    });
 
     const ts = new TypedSocket(data => {
         socket.emit("msg", data);
-    })
+    });
 
     socket.on("disconnect", (reason) => {
         console.log(`socket ${socket.id} disconnected due to ${reason}`);
@@ -46,5 +46,5 @@ io.on("connection", (socket) => {
 
     socket.on("msg", (msg) => {
         ts.recv(msg);
-    })
+    });
 });

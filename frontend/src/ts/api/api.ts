@@ -55,7 +55,7 @@ export class TypedSocket {
     }
 }
 
-const socket = io(`${location.protocol}://${location.host}:81/`);
+const socket = io(`${location.protocol}//${location.host}:81/`);
 
 socket.on("connect", () => {
     console.log(`%c socket connected ${socket.id}`, `color: green`);

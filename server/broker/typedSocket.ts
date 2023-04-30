@@ -1,12 +1,12 @@
-import { Static } from "https://esm.sh/@sinclair/typebox@0.27.4"
-import { TypeCompiler } from "https://esm.sh/@sinclair/typebox@0.27.4/compiler"
-import { ApiIDType, ApiIncomming, ApiOutgoing } from "../../ApiTypes/ApiTypes.ts";
+import { Static } from "https://esm.sh/@sinclair/typebox@0.27.4";
+import { TypeCompiler } from "https://esm.sh/@sinclair/typebox@0.27.4/compiler";
+import { ApiIDType, ApiIncoming, ApiOutgoing } from "../../ApiTypes/ApiTypes.ts";
 
-type Incomming = Static<typeof ApiIncomming>;
+type Incoming = Static<typeof ApiIncoming>;
 type Outgoing = Static<typeof ApiOutgoing>;
 export type ApiID = Static<typeof ApiIDType>;
 
-const checkIncomming = TypeCompiler.Compile(ApiIncomming);
+const checkIncoming = TypeCompiler.Compile(ApiIncoming);
 
 export class TypedSocket {
     constructor(private sendv: (data: string) => void) {
@@ -33,22 +33,22 @@ export class TypedSocket {
 
     public recv(data: string) {
         if (this.destroyed) {
-            console.warn(`[warn] [ignored] destroyed TypedSocket receieved data`);
+            console.warn(`received`);
             return;
         }
         try {
             const parsed = JSON.parse(data);
-            if (checkIncomming.Check(parsed)) {
-                const msg: Incomming = parsed;
-                console.log("incomming", msg);
+            if (checkIncoming.Check(parsed)) {
+                const msg: Incoming = parsed;
+                console.log("incoming", msg);
                 for (const cb of onRecv.values()) {
                     cb(msg.tx, msg.reqID, msg.resID);
                 }
             } else {
-                console.warn("ApiIncomming::TypeError:", checkIncomming.Errors(parsed));
+                console.warn("ApiIncoming", checkIncoming.Errors(parsed));
             }
         } catch (err) {
-            console.warn("ApiIncomming::TypeError: invalid JSON", err);
+            console.warn("ApiIncoming", err);
         }
     }
 }
@@ -71,12 +71,12 @@ export function callApi<T extends keyof Outgoing["tx"]>(req: Outgoing["tx"] | T,
         },
         reqID,
         resID: value as ApiID,
-    }
+    };
     sockets.forEach(s => s.send(data));
     return reqID;
 }
 
-type ApiCb = (data: Incomming["tx"], reqID?: ApiID, resID?: ApiID) => void;
+type ApiCb = (data: Incoming["tx"], reqID?: ApiID, resID?: ApiID) => void;
 
 const onRecv = new Map<ApiCb | symbol, ApiCb>();
 
@@ -88,13 +88,13 @@ export function onApiID(cb: ApiCb, id: ApiID, timeout = -1, once = true) {
             if (once)
                 onRecv.delete(cbID);
         }
-    })
+    });
     if (timeout > 0) {
         setTimeout(() => onRecv.delete(cbID), timeout);
     }
 }
 
-export function onApi(cb: ApiCb, method?: keyof Incomming["tx"]) {
+export function onApi(cb: ApiCb, method?: keyof Incoming["tx"]) {
     if (method) {
         onRecv.set(cb, (data, reqID, resID) => {
             if (data[method] !== undefined)
