@@ -1,7 +1,7 @@
 import { clone } from "lodash-es";
 import React, { useState } from "react";
 import { Bi } from "./lib/bi";
-import { Modal, ModalButton, ModalButtonrow, ModalContent, ModalInput, ModalTitle } from "./modalStyle";
+import { Modal, ModalButton, ModalButtonRow, ModalContent, ModalInput, ModalTitle } from "./modalStyle";
 
 
 export function Modals() {
@@ -25,22 +25,22 @@ type ModalResolve<T> = (res: T) => void;
 type ModalFnType<T> = (props: {
     resolve: (res: T) => void,
 }) => JSX.Element;
-let addModal: (key: ModalFnType<any>, value: ModalResolve<any>) => void
+let addModal: (key: ModalFnType<any>, value: ModalResolve<any>) => void;
 export function ShowModal<T>(ModalFn: ModalFnType<T>) {
     return new Promise<T>(res => {
         addModal(ModalFn, res);
-    })
+    });
 }
 export function showExampleModal() {
     ShowModal((props) => <Modal>
         <ModalTitle>Layout-Änderungen speichern?</ModalTitle>
         <ModalContent>
             <ModalInput placeholder="Label" />
-            <ModalButtonrow>
+            <ModalButtonRow>
                 <ModalButton onClick={() => props.resolve(true)}><Bi i="check-lg" /></ModalButton>
                 <ModalButton onClick={() => props.resolve(false)}><Bi i="x-lg" /></ModalButton>
-            </ModalButtonrow>
+            </ModalButtonRow>
         </ModalContent>
         {/* <button onClick={props.resolve}>Clickme</button> */}
-    </Modal>).then(console.warn)
+    </Modal>).then(console.warn);
 }
