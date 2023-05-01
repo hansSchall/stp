@@ -16,18 +16,6 @@
       "cwd": "${workspaceFolder}/frontend",
     },
     {
-      "name": "DB-Server (Postgres)",
-      "type": "node",
-      "request": "launch",
-      "skipFiles": [
-        "<node_internals>/**"
-      ],
-      "program": "${workspaceFolder}\\db-server\\dist\\db.js",
-      "outFiles": [
-        "${workspaceFolder}/**/*.js"
-      ]
-    },
-    {
       "name": "STP-Server",
       "type": "node",
       "request": "launch",
