@@ -1,6 +1,8 @@
 {
     "editor.suggest.snippetsPreventQuickSuggestions": false,
     "cSpell.words": [
-        "sendv"
+        "hardkey",
+        "sendv",
+        "Softkeyboard"
     ]
 }

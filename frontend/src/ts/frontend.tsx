@@ -12,6 +12,8 @@ import { Modal, ModalTitle, ModalContent, ModalInput, ModalButtonRow, ModalButto
 import { ChanView } from "./components/tabs/chanView/chanView";
 import { TrackView } from "./components/tabs/trackView/trackView";
 import "./api/api";
+import "./components/tabs/virtualKeyboard/virtualKeyboard";
+import { OverlaySoftkeyboard } from "./components/keyboard/softkeyboard";
 
 require("./includeStyle");
 
@@ -24,6 +26,7 @@ window.addEventListener("load", () => {
 
 function App() {
     const [editing, setEditMode] = useState(false);
+    const [overlaySoftkeyboard, setOverlaySoftkeyboard] = useState(true);
     const [loadedSplitting, setLoadedSplitting] = useState(false);
     const [splitting, setSplitting_] = useState<Splitting>([]);
     function setSplitting(val: Splitting) {
@@ -59,9 +62,10 @@ function App() {
             } else {
                 setEditMode(true);
             }
-        }} onMenu={() => { }} onKeyboard={() => { }} edit={editing} />
+        }} onMenu={() => { }} onKeyboard={() => { setOverlaySoftkeyboard(!overlaySoftkeyboard); }} edit={editing} />
         <Frames {...{ editing, splitting, setSplitting, loadedSplitting }} />
         {/* <button onClick={showExampleModal}>show modal</button> */}
+        <OverlaySoftkeyboard shown={overlaySoftkeyboard} />
         <Modals />
     </>;
 }

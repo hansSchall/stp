@@ -1,0 +1,50 @@
+.skb-tab {
+    width: 100%;
+    height: 100%;
+}
+
+.skb {
+    display: grid;
+    width: 100%;
+    height: 100%;
+    grid-auto-columns: 1fr;
+    grid-auto-rows: 1fr;
+    gap: 1rem;
+    padding: 1rem;
+}
+
+.skb-block {
+    background-color: #080808;
+    gap: .5rem;
+    padding: .5rem;
+    display: grid;
+    grid-auto-rows: 1fr;
+    grid-auto-columns: 1fr;
+}
+
+.skb-key {
+    background-color: #111;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #aaa;
+    font-size: 1.2rem;
+
+    @media(hover: hover) {
+
+        &:hover {
+            background-color: $mc;
+            color: #222;
+        }
+    }
+}
+
+
+.overlay-skb {
+    position: fixed;
+    top: 2.3rem;
+    left: 3rem;
+    height: 40rem;
+    width: 55rem;
+    background-color: #000;
+}
