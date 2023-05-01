@@ -18,6 +18,9 @@
 		"cSpell.words": [
 			"sendv",
 			"Stellpult"
-		]
+		],
+		"typescript.preferences.importModuleSpecifierEnding": "js",
+		"deno.enable": true,
+		"deno.unstable": true
 	}
 }
