@@ -1,5 +1,3 @@
-export const INVISIBLE = "\ufeff";
-
 export type QueryArr = (string | number)[];
 
 export function mapArrayAdd<K, V>(map: Map<K, V[] | V>, key: K, value: V) {

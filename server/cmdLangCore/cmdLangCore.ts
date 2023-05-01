@@ -10,13 +10,14 @@ export function runCmd(cmd: string | string[]): Promise<CmdResult> {
     // console.log(execute ? "running".red : "previewing".yellow, ...query.map(_ => typeof _ == "string" ? _.cyan : _));
     return parseQuery(query);
 }
+process.stdin.on("data", (data_) => {
+    console.log(data_);
+    const data = data_.toString().replace(/\n|\r/g, "");
+    // console.log(JSON.stringify(data));
+    test(data).then(console.log);
+});
 
-async function test() {
-    process.stdin.on("data", (data_) => {
-        const data = data_.toString().replace(/\n|\r/g, "");
-        // console.log(JSON.stringify(data));
-        runCmd(data).then(console.log);
-    })
-    // await runCmd("Chan 1 Thru 5 Dir Left");
+export async function test(cmd: string) {
+    // await runCmd("Chan 1 Thru 5 Dir Left Enter");
+    return await runCmd(cmd);
 }
-test();

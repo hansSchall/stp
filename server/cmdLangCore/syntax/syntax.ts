@@ -106,7 +106,7 @@ export const syntax = parseSyntax([
                 this.flags.s.set(FK.Attr, this.currentStep.toString());
                 this.continueWith("value");
             } else {
-                this.exit(BranchStatus.SYNTAXERROR);
+                this.exit(BranchStatus.RANGE_ERROR);
             }
         },
     }],
@@ -119,7 +119,7 @@ export const syntax = parseSyntax([
                 this.addResult(EXL.setAttrValue(this.flags.na.get(FK.Selection) ?? [], this.flags.s.get(FK.Attr) ?? "", this.currentStep.toString()));
                 this.continueWith("enter");
             } else {
-                this.exit(BranchStatus.SYNTAXERROR);
+                this.exit(BranchStatus.RANGE_ERROR);
             }
         },
     }],
@@ -134,4 +134,4 @@ export const syntax = parseSyntax([
     ["", {
         desc: "",
     }],
-])
+]);

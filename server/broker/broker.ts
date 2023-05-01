@@ -16,4 +16,6 @@ app.use(express.static(join(__dirname, "../../../frontend/dist"), {
     index: "index.html",
 }));
 
-httpServer.listen(81);
+httpServer.listen(81, () => {
+    console.log(`HTML5Client on port 81`);
+});
