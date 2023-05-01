@@ -1,50 +1,27 @@
-import { Server } from "https://deno.land/x/socket_io@0.2.0/mod.ts";
-import { TypedSocket } from "./typedSocket.ts";
+import { Server } from "socket.io";
+import { TypedSocket } from "./typedSocket";
+import { DefaultEventsMap } from "socket.io/dist/typed-events";
+import { SocketOutgoing, SocketIncoming } from "./socketDef";
 
-const pingContent = Symbol("pingContent");
+export function initSocket(io: Server<SocketOutgoing, SocketIncoming, DefaultEventsMap, any>) {
+    io.on("connection", (socket) => {
+        console.log(`socket ${socket.id} connected`);
 
-interface ClientPingContent {
-    content: typeof pingContent,
-}
+        socket.on("ping", (content) => {
+            socket.emit("pong", content);
+        });
 
-interface ServerPingContent {
-    timestamp: number,
-}
+        const ts = new TypedSocket(data => {
+            socket.emit("msg", data);
+        });
 
-interface SocketIncoming {
-    ping(content: ClientPingContent): void,
-    pong(content: ServerPingContent): void,
-    msg(msg: string): void,
-}
-interface SocketOutgoing {
-    ping(content: ServerPingContent): void,
-    pong(content: ClientPingContent): void,
-    msg(msg: string): void,
-}
+        socket.on("disconnect", (reason) => {
+            console.log(`socket ${socket.id} disconnected due to ${reason}`);
+            ts.destroy();
+        });
 
-export const io = new Server<SocketOutgoing, SocketIncoming>({
-    cors: {
-        origin: "*",
-    }
-});
-
-io.on("connection", (socket) => {
-    console.log(`socket ${socket.id} connected`);
-
-    socket.on("ping", (content) => {
-        socket.emit("pong", content);
+        socket.on("msg", (msg) => {
+            ts.recv(msg);
+        });
     });
-
-    const ts = new TypedSocket(data => {
-        socket.emit("msg", data);
-    });
-
-    socket.on("disconnect", (reason) => {
-        console.log(`socket ${socket.id} disconnected due to ${reason}`);
-        ts.destroy();
-    });
-
-    socket.on("msg", (msg) => {
-        ts.recv(msg);
-    });
-});
+}

@@ -1,1 +1,1 @@
-import "./broker/broker.ts";
+import "./broker/broker";

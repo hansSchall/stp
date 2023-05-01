@@ -1,6 +1,6 @@
-import { Static } from "https://esm.sh/@sinclair/typebox@0.27.4";
-import { TypeCompiler } from "https://esm.sh/@sinclair/typebox@0.27.4/compiler";
-import { ApiIDType, ApiIncoming, ApiOutgoing } from "../../ApiTypes/ApiTypes.ts";
+import { Static } from "@sinclair/typebox";
+import { TypeCompiler } from "@sinclair/typebox/compiler";
+import { ApiIDType, ApiIncoming, ApiOutgoing } from "../ApiTypes/ApiTypes";
 
 type Incoming = Static<typeof ApiIncoming>;
 type Outgoing = Static<typeof ApiOutgoing>;

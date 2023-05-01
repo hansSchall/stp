@@ -1,4 +1,4 @@
-import { Type } from "https://esm.sh/@sinclair/typebox@0.27.4";
+import { Type } from "@sinclair/typebox";
 
 const MethodIncoming = Type.Object({
     resendTVSheetList: Type.Boolean(),

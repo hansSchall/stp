@@ -26,6 +26,18 @@
       "outFiles": [
         "${workspaceFolder}/**/*.js"
       ]
+    },
+    {
+      "name": "STP-Server",
+      "type": "node",
+      "request": "launch",
+      "skipFiles": [
+        "<node_internals>/**"
+      ],
+      "program": "${workspaceFolder}\\server/build/main.js",
+      "outFiles": [
+        "${workspaceFolder}/server/build/**/*.js"
+      ]
     }
   ]
 }
