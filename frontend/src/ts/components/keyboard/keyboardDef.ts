@@ -125,8 +125,8 @@ export const keyboardDef: KeyboardDef = [
             ],
             [
                 Key("", "@", ""),
-                Key("", "Enter", ""),
-                Key("", "", ""),
+                Key("enter", "Enter", ""),
+                Key("*", "", ""),
             ],
         ],
     ],

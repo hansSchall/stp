@@ -45,17 +45,17 @@ function Key(props: {
     x: number,
     y: number,
 }) {
-    return <div className="skb-key" key={"skb-key"} style={xy2Grid(props.x, props.y)}>
+    if (props.id == "*") {
+        return null;
+    }
+    return <div className="skb-key" key={"skb-key"} style={xy2Grid(props.x, props.y, props.id == "enter")}>
         <div className="-label">{props.label}</div>
     </div>;
 }
 
-function xy2Grid(
-    x: number,
-    y: number,
-): CSSProperties {
+function xy2Grid(x: number, y: number, expand = false): CSSProperties {
     return {
-        gridColumn: `${x + 1} / ${x + 2}`,
+        gridColumn: `${x + 1} / ${x + (expand ? 3 : 2)}`,
         gridRow: `${y + 1} / ${y + 2}`,
     };
 }
