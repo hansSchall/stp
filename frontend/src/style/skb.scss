@@ -30,12 +30,9 @@
     color: #aaa;
     font-size: 1.2rem;
 
-    @media(hover: hover) {
-
-        &:hover {
-            background-color: $mc;
-            color: #222;
-        }
+    &:active {
+        background-color: $mc;
+        color: #222;
     }
 }
 
