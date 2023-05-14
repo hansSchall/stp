@@ -1,0 +1,13 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"type": "npm",
+			"script": "apiDef",
+			"path": "server",
+			"problemMatcher": [],
+			"label": "npm: apiDef - server",
+			"detail": "cd ApiTypes && nodemon build.js -e ts"
+		}
+	]
+}

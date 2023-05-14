@@ -20,5 +20,9 @@
     "@types/node": "^18.0.0",
     "@types/sqlite3": "^3.1.8",
     "@types/uuid": "^8.3.4"
+  },
+  "scripts": {
+    "run": "cd build && node main.js",
+    "apiDef": "cd ApiTypes && nodemon build.js -e ts"
   }
 }

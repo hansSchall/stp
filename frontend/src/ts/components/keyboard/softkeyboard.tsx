@@ -1,5 +1,6 @@
-import React, { CSSProperties, PropsWithChildren } from "react";
+import React, { CSSProperties, Fragment, PropsWithChildren, useContext } from "react";
 import { keyboardDef } from "./keyboardDef";
+import { CmdLineState } from "../cmdLine/cmdLine";
 
 export function Softkeyboard(props: {
 
@@ -8,13 +9,13 @@ export function Softkeyboard(props: {
         gridTemplateColumns: keyboardDef[0].map(_ => _[0].length + "fr").join(" "),
         gridTemplateRows: keyboardDef.map(_ => _[0].length + "fr").join(" "),
     }}>
-        {keyboardDef.map((row, rowInd) => <>
+        {keyboardDef.map((row, rowInd) => <Fragment key={rowInd}>
             {row.map((col, colInd) => <Block key={`b${rowInd}.${colInd}`} x={colInd} y={rowInd}>
-                {col.map((bRow, bRowInd) => <>
-                    {bRow.map(([id, label, hardkey], keyInd) => <Key id={id} label={label} hardkey={hardkey} key={`k${bRowInd}.${keyInd}`} x={keyInd} y={bRowInd} />)}
-                </>)}
+                {col.map((bRow, bRowInd) => <Fragment key={bRowInd}>
+                    {bRow.map(([id, label], keyInd) => <Key id={id} label={label} key={`k${bRowInd}.${keyInd}`} x={keyInd} y={bRowInd} />)}
+                </Fragment >)}
             </Block>)}
-        </>)}
+        </Fragment>)}
     </div>;
 }
 
@@ -41,14 +42,16 @@ function Block(props: PropsWithChildren & {
 function Key(props: {
     id: string,
     label: string,
-    hardkey: string,
     x: number,
     y: number,
 }) {
     if (props.id == "*") {
         return null;
     }
-    return <div className="skb-key" key={"skb-key"} style={xy2Grid(props.x, props.y, props.id == "enter")}>
+    const cmd = useContext(CmdLineState);
+    return <div className="skb-key" key={"skb-key"} style={xy2Grid(props.x, props.y, props.id == "enter")} onClick={() => {
+        cmd.keydown(props.id);
+    }}>
         <div className="-label">{props.label}</div>
     </div>;
 }

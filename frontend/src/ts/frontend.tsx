@@ -14,7 +14,7 @@ import { TrackView } from "./components/tabs/trackView/trackView";
 import "./api/api";
 import "./components/tabs/virtualKeyboard/virtualKeyboard";
 import { OverlaySoftkeyboard } from "./components/keyboard/softkeyboard";
-import { CmdLine } from "./components/cmdLine/cmdLine";
+import { CmdLine, CmdLineState, useCmdLine } from "./components/cmdLine/cmdLine";
 
 require("./includeStyle");
 
@@ -22,7 +22,13 @@ export let windowButtonDOM: HTMLElement | undefined;
 
 window.addEventListener("load", () => {
     windowButtonDOM = document.getElementById("window-buttons") ?? undefined;
-    renderRoot(document.querySelector("#app") as HTMLElement, <StrictMode><App /></StrictMode>);
+    const el: HTMLElement = document.querySelector("#app") as HTMLElement;
+    renderRoot(el, <StrictMode><App /></StrictMode>);
+    el.onkeydown = (ev) => {
+        // prevent browser shortcuts
+        ev.preventDefault();
+        ev.stopPropagation();
+    };
 });
 
 function App() {
@@ -30,6 +36,7 @@ function App() {
     const [overlaySoftkeyboard, setOverlaySoftkeyboard] = useState(false);
     const [loadedSplitting, setLoadedSplitting] = useState(false);
     const [splitting, setSplitting_] = useState<Splitting>([]);
+    const cmd = useCmdLine();
     function setSplitting(val: Splitting) {
         setSplitting_(val);
     }
@@ -39,37 +46,39 @@ function App() {
         setLoadedSplitting(true);
     }
     useEffect(loadSplittingFromStorage, []);
-    return <>
-        <WindowTitle title="Stellpult" />
-        <WindowButtons onEdit={() => {
-            if (editing) {
-                ShowModal((props) => <Modal>
-                    <ModalTitle>save window configuration changes?</ModalTitle>
-                    <ModalContent>
-                        <ModalButtonRow>
-                            <ModalButton onClick={() => props.resolve(true)}><Bi i="check-lg" /></ModalButton>
-                            <ModalButton onClick={() => props.resolve(false)}><Bi i="x-lg" /></ModalButton>
-                        </ModalButtonRow>
-                    </ModalContent>
-                </Modal>).then(res => {
-                    if (res) {
-                        sessionStorage.setItem("editor-splitting", JSON.stringify(splitting));
-                        setEditMode(false);
-                    } else {
-                        loadSplittingFromStorage();
-                        setEditMode(false);
-                    }
-                });
-            } else {
-                setEditMode(true);
-            }
-        }} onMenu={() => { }} onKeyboard={() => { setOverlaySoftkeyboard(!overlaySoftkeyboard); }} edit={editing} />
-        <Frames {...{ editing, splitting, setSplitting, loadedSplitting }} />
-        {/* <button onClick={showExampleModal}>show modal</button> */}
-        <CmdLine />
-        <OverlaySoftkeyboard shown={overlaySoftkeyboard} />
-        <Modals />
-    </>;
+    return <div id="app-wrapper" tabIndex={0} onKeyUp={cmd.value.keyEvent}>
+        <CmdLineState.Provider value={cmd.value}>
+            <WindowTitle title="Stellpult" />
+            <WindowButtons onEdit={() => {
+                if (editing) {
+                    ShowModal((props) => <Modal>
+                        <ModalTitle>save window configuration changes?</ModalTitle>
+                        <ModalContent>
+                            <ModalButtonRow>
+                                <ModalButton onClick={() => props.resolve(true)}><Bi i="check-lg" /></ModalButton>
+                                <ModalButton onClick={() => props.resolve(false)}><Bi i="x-lg" /></ModalButton>
+                            </ModalButtonRow>
+                        </ModalContent>
+                    </Modal>).then(res => {
+                        if (res) {
+                            sessionStorage.setItem("editor-splitting", JSON.stringify(splitting));
+                            setEditMode(false);
+                        } else {
+                            loadSplittingFromStorage();
+                            setEditMode(false);
+                        }
+                    });
+                } else {
+                    setEditMode(true);
+                }
+            }} onMenu={() => { }} onKeyboard={() => { setOverlaySoftkeyboard(!overlaySoftkeyboard); }} edit={editing} />
+            <Frames {...{ editing, splitting, setSplitting, loadedSplitting }} />
+            {/* <button onClick={showExampleModal}>show modal</button> */}
+            <CmdLine />
+            <OverlaySoftkeyboard shown={overlaySoftkeyboard} />
+            <Modals />
+        </CmdLineState.Provider>
+    </div>;
 }
 
 

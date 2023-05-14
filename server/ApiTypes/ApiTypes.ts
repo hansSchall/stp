@@ -10,7 +10,8 @@ const MethodOutgoing = Type.Object({
     tvSheetList: Type.Array(Type.Object({
         id: Type.Integer(),
         label: Type.String(),
-    }))
+    })),
+    cmdUserLabels: Type.Array(Type.String()),
 });
 
 const MethodBiDir = Type.Object({
