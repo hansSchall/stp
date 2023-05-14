@@ -13,7 +13,10 @@ $loading_h1: 4rem;
 
 $header-height: 2.2rem;
 
+$cmdl-height: 2.5rem;
+
 @import "chanv.scss";
+@import "cmdl.scss";
 @import "skb.scss";
 @import "usv.scss";
 @import "chs.scss";
@@ -125,7 +128,7 @@ body {
 
 .frames {
     width: 100vw;
-    height: calc(100% - $header-height);
+    height: calc(100% - $header-height - $cmdl-height);
     padding: .2rem;
     position: fixed;
     display: flex;

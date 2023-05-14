@@ -1,0 +1,26 @@
+.cmdl {
+    height: $cmdl-height;
+    position: fixed;
+    bottom: 0;
+    display: flex;
+    width: 100%;
+    padding: .2rem;
+    flex-direction: row;
+    align-items: center;
+}
+
+.cmdl-line {
+    height: 100%;
+    flex: 1 1 0;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    border: .2rem solid $mc;
+    color: $mc;
+    padding-left: .8rem;
+    gap: .2rem;
+    font-weight: 700;
+    border-radius: .5rem;
+    // justify-content: flex-start;
+
+}
