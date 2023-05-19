@@ -1,0 +1,11 @@
+{
+  "name": "stp-desktop",
+  "version": "1.0.0",
+  "main": "build/electron.js",
+  "author": "hansSchall",
+  "license": "GPL-v3",
+  "private": true,
+  "dependencies": {
+    "electron": "^24.3.0"
+  }
+}

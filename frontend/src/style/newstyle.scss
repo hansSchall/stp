@@ -84,6 +84,8 @@ body {
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
+    //electron
+    -webkit-app-region: drag;
 }
 
 .h-gr {
@@ -91,11 +93,15 @@ body {
     align-items: stretch;
     justify-content: stretch;
     height: 100%;
+
+    &.-buttons {
+        -webkit-app-region: no-drag;
+    }
 }
 
 .h-b {
     height: 100%;
-    width: 3rem;
+    width: 3.2rem;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -109,9 +115,18 @@ body {
         background-color: #2225;
     }
 
-    &.bi-x-lg:hover {
+    &.-close:hover {
         background-color: #d82a1d;
         color: white;
+    }
+
+    &.win-ctrl {
+        display: none;
+    }
+
+    &.-win {
+        font-family: "Segoe MDL2 Assets";
+        font-size: .9rem;
     }
 }
 
@@ -268,6 +283,10 @@ body {
     overflow-x: scroll;
     overflow-y: hidden;
     scrollbar-width: none;
+
+    &::-webkit-scrollbar {
+        display: none;
+    }
 }
 
 .tab-nav-item,

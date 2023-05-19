@@ -8,6 +8,14 @@
 			"problemMatcher": [],
 			"label": "npm: apiDef - server",
 			"detail": "cd ApiTypes && nodemon build.js -e ts"
+		},
+		{
+			"type": "npm",
+			"script": "run",
+			"path": "frontend",
+			"problemMatcher": [],
+			"label": "npm: run - frontend",
+			"detail": "webpack serve"
 		}
 	]
 }

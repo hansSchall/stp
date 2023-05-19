@@ -1,27 +1,36 @@
 <!DOCTYPE html>
 <html>
+
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1, maximum-scale=1">
         <style>
-            body, html, :root{
+            body,
+            html,
+            :root {
                 background-color: black;
                 touch-action: none;
             }
         </style>
     </head>
+
     <body oncontextmenu="return false;">
         <header id="win-header">
-            <div class="h-gr" id="window-buttons">
+            <div class="h-gr -buttons" id="window-buttons">
             </div>
             <div class="h-gr">
                 <span id="win-title"></span>
             </div>
-            <div class="h-gr">
+            <div class="h-gr -buttons">
                 <button class="h-b bi-fullscreen" id="fullscreen-button"></button>
-                <button class="h-b bi-dash-lg"></button>
-                <button class="h-b bi-square"></button>
-                <button class="h-b bi-x-lg"></button>
+                <button class="h-b bi-dash-lg win-ctrl -nonwin -min"></button>
+                <button class="h-b bi-chevron-up win-ctrl -nonwin -max"></button>
+                <button class="h-b bi-chevron-down win-ctrl -nonwin -res"></button>
+                <button class="h-b bi-x-lg win-ctrl -nonwin -close"></button>
+                <button class="h-b win-ctrl -win -min">&#xE921;</button>
+                <button class="h-b win-ctrl -win -max">&#xE922;</button>
+                <button class="h-b win-ctrl -win -res">&#xE923;</button>
+                <button class="h-b win-ctrl -win -close">&#xE8BB;</button>
             </div>
         </header>
         <div id="app">
@@ -33,22 +42,72 @@
         </div>
     </body>
     <script>
-        const btn = document.getElementById("fullscreen-button")
+        async function updateMaxState() {
+            const max = await preload.getMaxState();
+            if (max) {
+                document.querySelector(".win-ctrl.-max").style.display = "none";
+                document.querySelector(".win-ctrl.-res").style.display = "flex";
+            } else {
+                document.querySelector(".win-ctrl.-max").style.display = "flex";
+                document.querySelector(".win-ctrl.-res").style.display = "none";
+            }
+        }
+
+        window.addEventListener("load", async () => {
+            if (window.preload) {
+                // electron
+                if (await preload.getOS() == "win32") {
+                    document.querySelectorAll(".win-ctrl.-nonwin").forEach(_ => _.remove());
+                } else {
+                    document.querySelectorAll(".win-ctrl.-win").forEach(_ => _.remove());
+                }
+                document.querySelector(".win-ctrl.-min").addEventListener("click", preload.winMin);
+                document.querySelector(".win-ctrl.-max").addEventListener("click", preload.winMax);
+                document.querySelector(".win-ctrl.-res").addEventListener("click", preload.winRes);
+                document.querySelector(".win-ctrl.-close").addEventListener("click", preload.winClose);
+
+                document.querySelector(".win-ctrl.-min").style.display = "flex";
+                document.querySelector(".win-ctrl.-close").style.display = "flex";
+                updateMaxState();
+                window.addEventListener("resize", updateMaxState);
+            } else {
+                // browser
+                document.querySelectorAll(".win-ctrl").forEach(_ => _.remove());
+            }
+
+            window.onkeydown = (ev) => {
+                // prevent browser shortcuts
+                ev.preventDefault();
+                ev.stopPropagation();
+
+                if (ev.key == "F5") {
+                    location.reload();
+                }
+
+                if ((ev.key == "F12" || (ev.key == "I" && ev.ctrlKey && ev.shiftKey)) && window.preload) {
+                    preload.devtools();
+                }
+            };
+        })
+    </script>
+    <script> // fullscreen
+        const btn = document.getElementById("fullscreen-button");
         document.addEventListener("fullscreenchange", (ev) => {
-            if(document.fullscreenElement){
+            if (document.fullscreenElement) {
                 btn.classList.remove("bi-fullscreen");
                 btn.classList.add("bi-fullscreen-exit");
-            }else{
+            } else {
                 btn.classList.add("bi-fullscreen");
                 btn.classList.remove("bi-fullscreen-exit");
             }
-        })
+        });
         btn.addEventListener("click", () => {
-            if(document.fullscreenElement){
+            if (document.fullscreenElement) {
                 document.exitFullscreen();
-            }else{
+            } else {
                 document.documentElement.requestFullscreen();
             }
         })
     </script>
+
 </html>

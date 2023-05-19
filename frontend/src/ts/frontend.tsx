@@ -24,11 +24,7 @@ window.addEventListener("load", () => {
     windowButtonDOM = document.getElementById("window-buttons") ?? undefined;
     const el: HTMLElement = document.querySelector("#app") as HTMLElement;
     renderRoot(el, <StrictMode><App /></StrictMode>);
-    el.onkeydown = (ev) => {
-        // prevent browser shortcuts
-        ev.preventDefault();
-        ev.stopPropagation();
-    };
+
 });
 
 function App() {
