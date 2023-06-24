@@ -43,10 +43,12 @@ module.exports = {
         filename: '[contenthash].js',
         path: path.resolve(__dirname, 'dist'),
         clean: true,
+        publicPath: "/app/"
     },
 
     devServer: {
         compress: true,
-        port: 80,
+        port: 81,
+        allowedHosts: "all",
     },
 };
