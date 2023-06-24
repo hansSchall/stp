@@ -25,7 +25,11 @@
       "program": "${workspaceFolder}\\server/build/main.js",
       "outFiles": [
         "${workspaceFolder}/server/build/**/*.js"
-      ]
+      ],
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen",
+      "restart": true,
+      "runtimeExecutable": "nodemon"
     }
   ]
 }
