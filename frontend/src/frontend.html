@@ -76,17 +76,22 @@
             }
 
             window.onkeydown = (ev) => {
+                if (ev.key == "F5" || (ev.key == "R" && ev.ctrlKey)) {
+                    location.reload();
+                    return;
+                }
+
+                if (ev.key == "F12" || (ev.key == "I" && ev.ctrlKey && ev.shiftKey)) {
+                    if (window.preload) {
+                        preload.devtools();
+                    } else {
+                        return;
+                    }
+                }
+
                 // prevent browser shortcuts
                 ev.preventDefault();
                 ev.stopPropagation();
-
-                if (ev.key == "F5") {
-                    location.reload();
-                }
-
-                if ((ev.key == "F12" || (ev.key == "I" && ev.ctrlKey && ev.shiftKey)) && window.preload) {
-                    preload.devtools();
-                }
             };
         })
     </script>
