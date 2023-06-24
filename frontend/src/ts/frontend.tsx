@@ -1,3 +1,6 @@
+// require("./includeStyle");
+import "./includeStyle";
+import "./lib/mapMap";
 // import { LoadBar } from "./loadBar";
 import { renderRoot } from "./renderRoot";
 import { WindowTitle } from "./windowTitle";
@@ -5,18 +8,18 @@ import { WindowTitle } from "./windowTitle";
 import { Frames, Splitting } from "./frames";
 import React, { StrictMode, useEffect, useState } from "react";
 import { WindowButtons } from "./windowButton";
-import { LayoutSaveCancel } from "./components/layoutSaveCancel";
+// import { LayoutSaveCancel } from "./components/layoutSaveCancel";
 import { Modals, showExampleModal, ShowModal } from "./modal";
 import { Bi } from "./lib/bi";
 import { Modal, ModalTitle, ModalContent, ModalInput, ModalButtonRow, ModalButton } from "./modalStyle";
-import { ChanView } from "./components/tabs/chanView/chanView";
-import { TrackView } from "./components/tabs/trackView/trackView";
+import "./components/tabs/chanView/chanView";
+import "./components/tabs/trackView/trackView";
+import "./components/tabs/devTree/devTree";
 import "./api/api";
 import "./components/tabs/virtualKeyboard/virtualKeyboard";
 import { OverlaySoftkeyboard } from "./components/keyboard/softkeyboard";
 import { CmdLine, CmdLineState, useCmdLine } from "./components/cmdLine/cmdLine";
 
-require("./includeStyle");
 
 export let windowButtonDOM: HTMLElement | undefined;
 
@@ -76,7 +79,3 @@ function App() {
         </CmdLineState.Provider>
     </div>;
 }
-
-
-ChanView;
-TrackView;
