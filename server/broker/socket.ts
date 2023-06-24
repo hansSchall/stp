@@ -1,7 +1,8 @@
 import { Server } from "socket.io";
 import { TypedSocket } from "./typedSocket";
 import { DefaultEventsMap } from "socket.io/dist/typed-events";
-import { SocketOutgoing, SocketIncoming } from "./socketDef";
+import { SocketIncoming, SocketOutgoing } from "./socketDef";
+export { SocketOutgoing, SocketIncoming } from "./socketDef";
 
 export function initSocket(io: Server<SocketOutgoing, SocketIncoming, DefaultEventsMap, any>) {
     io.on("connection", (socket) => {
