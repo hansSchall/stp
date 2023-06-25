@@ -1,26 +1,13 @@
-import { initTypeonly } from "./typecheck";
-import * as fs from "fs-extra";
-import { Interface } from "./interfaces";
-import { RootDriver } from "./drivers/root.driver";
-import { fromfile, getDevStorage } from "./devStore";
+// import RootDriver from "../devCore_/drivers/root.driver";
+import { waitFor } from "simple-promise-locks";
+import { RootDriver } from "../config/devCore/drivers/root/root.driver";
+import { loadConfig } from "./devStore";
+import { Interface } from "./interface";
 
+export const w_rootDriver = waitFor<RootDriver>();
 
-async function main() {
-    await initTypeonly()
-    const files = await fs.readdir(`./drivers`);
-    await Promise.all(files.map(file => {
-        if (file.endsWith(".js"))
-            return import("./drivers/" + file);
-        else
-            return Promise.resolve()
-    }));
-    console.debug("loaded drivers");
-
-    fromfile(`
-#root
-*Children
-=[{"type": "serial", "id": "ksjfh"}]
-    `.split("\n"))
+export async function initDevCore() {
+    await loadConfig("default");
 
     const rootUplink = new Interface<void, void>();
     rootUplink.server.onReceiveA = (msg) => {
@@ -28,11 +15,19 @@ async function main() {
         if (msg.type == "remount" && msg.origin == "root") {
             rootDriver.unmount();
             rootDriver = new RootDriver("root", rootUplink.client);
+            w_rootDriver(rootDriver);
         }
-    }
+    };
     rootUplink.server.lockR.unlock();
-    var rootDriver = new RootDriver("root", rootUplink.client);
+    let rootDriver = new RootDriver("root", rootUplink.client);
+    w_rootDriver(rootDriver);
 }
-main().catch(err => {
-    throw err;
-})
+
+export async function getDevTree() {
+    const root = await w_rootDriver();
+    return root.getSnapshot();
+}
+
+setTimeout(async () => {
+    console.dir(await getDevTree());
+}, 1000);

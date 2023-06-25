@@ -45,3 +45,5 @@ node_modules/
 # old stuff
 server/devCore_
 
+# project files
+server/config/devcore/data

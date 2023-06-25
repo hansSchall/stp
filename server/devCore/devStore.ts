@@ -1,41 +1,39 @@
-import { typecheck } from "./typecheck";
+import { Database, open } from "sqlite";
+import { Database as DB3 } from "sqlite3";
+import lock, { waitFor } from "simple-promise-locks";
+import { resolve } from "node:path";
+import { TSchema } from "@sinclair/typebox";
 
-const devStorage = new Map<string, Map<string, any>>();
+const w_db = waitFor<Database>();
+const l_db = lock(true);
 
-export function getDevStorage(driver: { devID: string }, key: string) {
-    return devStorage.get(driver.devID.trim())?.get(key);
-}
-export function getDevStorageType<Type>(driver: { devID: string, driverName: string }, key: string) {
-    return typecheck<Type>(devStorage.get(driver.devID.trim())?.get(key), driver.driverName, key);
-}
-
-export function setDevStorage(driver: { devID: string }, key: string, value: any) {
-    devStorage.get(driver.devID.trim())?.set(key, value);
-}
-
-export function toFile(): string[] {
-    return ([...devStorage].map(
-        ([devID, data]) =>
-            ["#" + devID.trim(), ...([...data].map(
-                ([key, value]) =>
-                    ["*" + key, "=" + JSON.stringify(value)]
-            )).flat()]
-    )).flat();
+export async function db() {
+    await l_db();
+    return await w_db();
 }
 
-export function fromfile(file: string[]) {
-    devStorage.clear();
-    var devID = "";
-    var key = "";
-    file.forEach(line => {
-        line = line.trim();
-        if (line.startsWith("*")) {
-            key = line.substring(1).trim();
-        } else if (line.startsWith("=")) {
-            devStorage.get(devID)?.set(key, JSON.parse(line.substring(1).trim()));
-        } else if (line.startsWith("#")) {
-            devID = line.substring(1).trim();
-            devStorage.set(devID, new Map())
-        }
-    })
+export async function getDevConf(id: string) {
+    return await (await db()).get(`SELECT value FROM devConf WHERE id = ?`, [id]);
+}
+
+export async function setDevConf(id: string, conf: string) {
+    return await (await db()).get(`INSERT OR REPLACE INTO devConf VALUES (?,?)`, [id, conf]);
+}
+
+export async function loadConfig(id: string) {
+    const db = await open({
+        filename: resolve(__dirname, "../../config/devCore/data/" + id + ".stp"),
+        driver: DB3,
+    });
+
+    await Promise.all([
+        `CREATE TABLE IF NOT EXISTS devConf (id TEXT PRIMARY KEY, value TEXT)`,
+    ].map((stmt) => db.run(stmt)));
+
+    w_db(db);
+    l_db.unlock();
+}
+
+export function releaseConfig() {
+    l_db.lock();
 }
