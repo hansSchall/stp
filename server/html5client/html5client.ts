@@ -30,6 +30,8 @@ export async function initHTML5Client() {
         }));
     }
 
+    app.get("/", (req, res) => res.redirect("/app"));
+
     httpServer.listen(config.port, () => {
         console.log(`[HTML5Client] listening on port ${config.port}`.green);
     });
