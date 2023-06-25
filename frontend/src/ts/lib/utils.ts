@@ -1,10 +1,9 @@
-import { Lock, unlock, waitFor } from "./waitFor";
+import lock, { waitFor } from "simple-promise-locks";
 
-export const windowLoad: Lock = Symbol();
-export const whenReady = () => waitFor(windowLoad);
+export const windowLoad = lock(true);
 window.addEventListener("load", () => {
-    unlock(windowLoad);
-})
+    windowLoad.unlock();
+});
 
 
 export function $<T extends HTMLElement>(query: string): T | null {
@@ -26,21 +25,21 @@ interface Element {
 // @ts-expect-error
 HTMLElement.prototype.$ = function (query: string) {
     return this.querySelector(query);
-}
+};
 // @ts-expect-error
 HTMLElement.prototype.$_ = function (query: string) {
     const el = this.querySelector(query);
     if (!el) throw new TypeError("[Not Expected] querySelector is null");
     return el;
-}
+};
 // @ts-expect-error
 HTMLElement.prototype.$$ = function (query: string) {
     return [...this.querySelectorAll(query)] as HTMLElement[];
-}
+};
 
 Object.defineProperty(Array.prototype, 'last', {
-    get: function () { return this[this.length - 1] },
-    set: function (value) { this[this.length - 1] = value },
+    get: function () { return this[this.length - 1]; },
+    set: function (value) { this[this.length - 1] = value; },
 });
 
 export function $elC(className: string): HTMLDivElement {

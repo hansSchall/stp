@@ -1,13 +1,17 @@
 {
   "dependencies": {
+    "@monaco-editor/react": "^4.5.1",
     "@sinclair/typebox": "^0.27.4",
     "bootstrap-icons": "^1.8.3",
     "lodash-es": "^4.17.21",
+    "monaco-editor": "^0.39.0",
+    "monaco-themes": "^0.4.4",
     "prop-types": "^15.8.1",
     "react": "^18.1.0",
     "react-dom": "^18.1.0",
     "react-hammerjs": "^1.0.1",
     "react-zoom-pan-pinch": "^3.0.6",
+    "simple-promise-locks": "^2.2.1",
     "socket.io-client": "^4.6.1",
     "string-replace-loader": "^3.1.0",
     "string-replace-webpack-plugin": "^0.1.3",

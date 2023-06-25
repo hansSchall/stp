@@ -13,6 +13,9 @@
     width: 50%;
     position: absolute;
     right: 0%;
+    display: flex;
+    flex-direction: column;
+    padding-left: 1rem;
 }
 
 .devt-node {
@@ -68,4 +71,149 @@
     // align-items: stretch;
     // gap: .2rem;
     flex-direction: column;
+}
+
+
+.devt-props-tabs {
+    // background-color: #3c4733;
+    flex: 0 0 auto;
+    display: flex;
+}
+
+.devt-props-tab {
+    flex: 1 1 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 3rem;
+    border-bottom: .2rem solid #333;
+    font-size: 1.2rem;
+    // font-weight: 600;
+
+    &.-active {
+        border-bottom-color: $mc;
+        color: $mc;
+    }
+}
+
+.devt-prop-tree {
+    flex: 1 1 auto;
+    // background-color: #111;
+}
+
+.devt-prop-tree-error {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 1rem;
+
+    .-title {
+        font-size: 1.3rem;
+    }
+
+    .-action {
+        background-color: $mc;
+        color: black;
+        padding: 1rem;
+        border-radius: .2rem;
+    }
+}
+
+.devt-props-err-box {
+    flex: 0 0 auto;
+    max-height: 40%;
+    overflow: auto;
+}
+
+.devt-raw-json {
+    flex: 1 1 0;
+    width: 100%;
+    overflow: hidden;
+
+    // textarea {
+    //     width: 100%;
+    //     height: 100%;
+    //     background-color: #111;
+    //     border: 0;
+    //     outline: none !important;
+    //     color: #adfd8e;
+    // }
+}
+
+.devt-monaco-wrapper {
+    height: 100%;
+}
+
+.devt-props-err {
+    background-color: rgb(207, 46, 46);
+    color: rgb(59, 37, 37);
+    padding: 1rem;
+    margin-top: .2rem;
+    border-radius: .2rem;
+    // display: flex;
+    padding-top: 2.5rem;
+    position: relative;
+
+    .-type {
+        position: absolute;
+        top: 1rem;
+        font-size: 1.1rem;
+        font-weight: 600;
+        font-family: monospace;
+    }
+
+    .-title {
+        margin-left: .5rem;
+    }
+
+    .-src {
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
+        font-size: 1.1rem;
+        font-weight: 600;
+        font-family: monospace;
+    }
+}
+
+.devt-props-commit {
+    // background-color: rgb(54, 63, 33);
+    // color: rgb(59, 37, 37);
+    padding: .5rem;
+    margin-top: .2rem;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .-action {
+        border-radius: .2rem;
+        padding: .7rem 1rem;
+        background-color: $mc;
+        color: #222;
+        font-size: 1.2rem;
+    }
+
+}
+
+.schema-state {
+    flex: 0 0 1rem;
+    position: relative;
+
+    .-box {
+        z-index: 10000;
+        position: absolute;
+        top: 1.3rem;
+        padding: 1rem;
+        background-color: #222;
+        left: 50%;
+        transform: translateX(-50%);
+        border-radius: .2rem;
+    }
 }
