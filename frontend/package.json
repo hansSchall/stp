@@ -10,6 +10,7 @@
     "react": "^18.1.0",
     "react-dom": "^18.1.0",
     "react-hammerjs": "^1.0.1",
+    "react-use": "^17.4.0",
     "react-zoom-pan-pinch": "^3.0.6",
     "simple-promise-locks": "^2.2.1",
     "socket.io-client": "^4.6.1",

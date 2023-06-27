@@ -6,6 +6,7 @@ import { SocketIncoming, SocketOutgoing, initSocket } from "../broker/socket";
 import proxy from "express-http-proxy";
 import { config } from "../config/html5client/html5client.conf";
 import { getScheme } from "./bindings/jsonSchemeTest/jsonSchemeTest";
+import { r as apiRouter } from "./bindings/api";
 
 
 export async function initHTML5Client() {
@@ -37,6 +38,8 @@ export async function initHTML5Client() {
     app.get("/api/test/jsonSchema", (req, res) => {
         res.contentType("application/json").send(getScheme());
     });
+
+    app.use("/api", apiRouter);
 
     httpServer.listen(config.port, () => {
         console.log(`[HTML5Client] listening on port ${config.port}`.green);

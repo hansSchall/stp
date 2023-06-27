@@ -28,6 +28,11 @@
         font-weight: 800;
         color: #79886c;
     }
+
+    &.-active {
+        background-color: rgb(48, 42, 35);
+        border-radius: .2rem;
+    }
 }
 
 .devt-node-label {

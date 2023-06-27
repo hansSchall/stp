@@ -40,6 +40,7 @@ export abstract class Driver<PortUplink = any, PortDownlink = any> {
             id: this.devID,
             label: this.getName(),
             cat: this.cat,
+            iid: "",
             children: this.getChildren().map(_ => _.getSnapshot()),
         };
     }

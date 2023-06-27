@@ -7,6 +7,7 @@ export class DriverError {
 export interface DevTreeSnapshot {
     id: string,
     label: string,
+    iid: string,
     cat: string,
     children: DevTreeSnapshot[],
 }

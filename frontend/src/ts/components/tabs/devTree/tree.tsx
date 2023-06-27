@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { PropsWithChildren } from "react";
-import { DevTreeStruct, FoldContext } from "./devTree";
+import { DevTreeStruct, FoldContext, useSelNode } from "./devTree";
 
 function groupNodes(nodes: DevTreeStruct[]) {
     const res = new Map<string, DevTreeStruct[]>();
@@ -15,8 +15,11 @@ export function DevTreeNode(p: PropsWithChildren & {
     // id: string
     node: DevTreeStruct,
 }) {
+    const [selNode, setSelNode] = useSelNode();
     const fold = useContext(FoldContext);
-    return <div className="devt-node -node">
+    return <div className={"devt-node -node" + (selNode === p.node.id ? " -active" : "")} onClick={() => {
+        setSelNode(p.node.id);
+    }}>
         <div className="devt-node-label">
             <i className="bi-chevron-right" onClick={() => {
                 fold.setFold(p.node.id, !fold.fold.get(p.node.id));
